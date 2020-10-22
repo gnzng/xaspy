@@ -1,8 +1,9 @@
 # xaspy
+[in beta and development phase]
 
-simple module for doing xray absorption spectroscopy analysis,
+Small module for doing xray absorption spectroscopy analysis using python. More detailed information will follow soon. 
 
-in beta phase
+
 
 ## installation
 ```bash
