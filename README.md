@@ -16,7 +16,7 @@ Function XMCD merges and interpolates the spectra for same spin angular momentum
 
 ## readin functions for ASCII data 
 
-readin functions for special beamlines: VEKMAG
+readin functions for special beamlines: e.g. VEKMAG at BESSY II in Berlin
 
 ## despiking of data
 
