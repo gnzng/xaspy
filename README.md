@@ -25,3 +25,17 @@ read in functions for output files for programs like FEFF, multiX, xraylarch, qu
 ## despiking of data
 
 removes spikes from data while loading the data, without changing the raw data ... coming soon
+
+## toggle cell
+
+this function can be imported from the utils package:
+
+```python
+from xaspy.utils import toggle
+```
+it creates a button with the argument as a a label, which can toggle away the whole cell. 
+
+# Todo, coming soon:
+
+- depeaking 
+- basic Mössbauer fitting 
