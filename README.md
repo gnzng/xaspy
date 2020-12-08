@@ -9,6 +9,11 @@ Small module for doing xray absorption spectroscopy analysis using python. More 
 ```bash
 pip install xaspy
 ```
+update with: 
+
+```bash
+pip install xaspy -U
+```
 
 ## XMCD investigation
 
