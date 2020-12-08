@@ -24,7 +24,32 @@ read in functions for output files for programs like FEFF, multiX, xraylarch, qu
 
 ## despiking of data
 
-removes spikes from data while loading the data, without changing the raw data ... coming soon
+removes spikes from data while loading the data, without changing the raw data ... it creates *.spike file with list of rows to avoid, which will automatically be ignored while reading data in. use readin function as follows:
+
+```python
+#function for read in a is number of scan
+def rd(a,raw=False):
+    path = '../path/to/'
+    file = path + 'file'
+    a = a
+    dff = pd.read_csv(path+'file_{0:03}'.format(a), delim_whitespace=True,skiprows=[1]) # example readin
+    if raw==False:
+        try:
+            with open(file+'.spike','rb') as f:
+                b = pickle.load(f)
+                if a in b:
+                    todrop = b[a]
+                    dff = dff.drop(todrop) #returns cleaned pandas file if .spike is existent and has an entry for scan number
+        except:
+            pass
+    else: 
+        pass
+    return dff #returns pandas file 
+```
+load raw/spiked data with 
+```python 
+rd(nr, raw=True)
+```
 
 ## toggle cell
 
