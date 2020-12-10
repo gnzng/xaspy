@@ -29,7 +29,7 @@ read in functions for output files for programs like FEFF, multiX, xraylarch, qu
 
 ## despiking of data
 
-removes spikes from data while loading the data, without changing the raw data ... it creates *.spike file with list of rows to avoid, which will automatically be ignored while reading data in. use readin function as follows:
+removes spikes from data while loading the data, without changing the raw data ... it creates *.spike file with list of rows to avoid, which will automatically be dropped while reading data in. Please use a basic read in function as follows:
 
 ```python
 #function for read in a is number of scan
@@ -67,5 +67,4 @@ it creates a button with the argument as a a label, which can toggle away the wh
 
 # Todo, coming soon:
 
-- depeaking 
 - basic Mössbauer fitting 
