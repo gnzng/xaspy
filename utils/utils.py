@@ -26,3 +26,18 @@ def toggle(a):
     def toggle_code():
         display(HTML(toggle_str))
 
+
+
+def showspeccom(a):
+    '''
+    a = SPEC file
+    returns list with commands/comments #C and #S
+    '''
+    clst=[]
+    with open(a,'r')as f:
+        for line in f:
+            if '#C' in line:
+                clst.append(line.replace('\n',''))
+            if '#S' in line:
+                clst.append(line.replace('\n',''))
+    return clst
