@@ -1,10 +1,7 @@
 # xaspy
 [in beta and development phase]
 
-Xray Absorption :spy:
-
-Small module for doing xray absorption spectroscopy analysis using python. More detailed information will follow soon. 
-
+Small module for doing xray absorption spectroscopy analysis and pre evaluation on beam time using python. More detailed information will follow soon. 
 
 
 ## installation
@@ -19,11 +16,11 @@ pip install xaspy -U
 
 ## XMCD investigation
 
-Function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Lies then the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...).  
+Function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...).  
 
 ## read in functions for experimental ASCII data 
 
-read in functions for special beamlines: e.g. VEKMAG at BESSY II in Berlin
+Different read in functions for special beamlines: e.g. VEKMAG/PM3 at BESSY II in Berlin. Dealing with large SPECS files. 
 
 ## read in function for theoretical calculations
 
@@ -31,7 +28,7 @@ read in functions for output files for programs like FEFF, multiX, xraylarch, qu
 
 ## despiking of data
 
-removes spikes from data while loading the data, without changing the raw data ... it creates *.spike file with list of rows to avoid, which will automatically be dropped while reading data in. Please use a basic read in function as follows:
+removes spikes from data while loading the data, without changing the raw data ... it creates .spike file with list of rows to avoid, which will automatically be dropped while reading data in. Please use a basic read in function as follows:
 
 ```python
 #function for read in a is number of scan
@@ -59,14 +56,15 @@ rd(nr, raw=True)
 ```
 
 ## toggle cell
-
 this function can be imported from the utils package:
 
 ```python
 from xaspy.utils import toggle
 ```
+
 it creates a button with the argument as a a label, which can toggle away the whole cell. 
 
 # Todo, coming soon:
 
 - basic Mössbauer fitting 
+- improve despiking
