@@ -1,6 +1,8 @@
 # xaspy
 [in beta and development phase]
 
+Xray Absorption :spy:
+
 Small module for doing xray absorption spectroscopy analysis using python. More detailed information will follow soon. 
 
 
