@@ -56,10 +56,10 @@ def XMCD(pdat,mdat,ene,det,mon,log):
         if mon == False:
             v2 = np.array(t2mdat[n][det])
         t3mdat.append(interpolate.interp1d(v1,v2)(xx))
-    t4pdat=[] # alles aus +hel gmerged
+    t4pdat=[] # all from +hel merged
     for k in range(0,len(xx)):
         t4pdat.append(np.sum([t3pdat[s][k] for s in range(len(t3pdat))])/int(len(t3pdat)))
-    t4mdat=[] # alles aus -hel gmerged
+    t4mdat=[] # all from -hel merged
     for k in range(0,len(xx)):
         t4mdat.append(np.sum([t3mdat[s][k] for s in range(len(t3mdat))])/int(len(t3mdat)))
     t5pdat= np.array(t4pdat)
@@ -74,14 +74,22 @@ def XMCD(pdat,mdat,ene,det,mon,log):
     cfy2 = corrpost(x2)
     #correlated signal with pmerged
     t5mdat = (t5mdat*(cfy1-x1*(cfy1-cfy2)/(x1-x2)+xx*(cfy1-cfy2)/(x1-x2)))
-    xas = (t5pdat+t5mdat)/2
-    xmcd = (t5pdat-t5mdat)
-    return xx, t5pdat, t5mdat,xas,xmcd
+    #####
+    xas = (t5pdat+t5mdat)/2 
+    #Subtracting backgrounds now:
+    linbkg = np.poly1d(np.polyfit(xx[:int(len(xx)*0.1)],xas[:int(len(xx)*0.1 )],1))(xx)
+    xas    = xas    - linbkg
+    pxas   = t5pdat - linbkg
+    mxas   = t5mdat - linbkg
+    #### now normalized to XAS maximum
+    xmcd = (t5pdat-t5mdat)/np.max(xas)
+    return xx, pxas, mxas, xas, xmcd
 ### 
 
+
+
+
 ########### HSYT functions:
-
-
 ###########
 ####HYST###
 def HYST(df,fld, ene, det, mon, Epre, Eedg):
