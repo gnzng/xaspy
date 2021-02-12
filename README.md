@@ -66,4 +66,4 @@ rd(nr, raw=True)
 
 # Todo, coming soon:
 
-[ ] improve fast despiking
+[] improve fast despiking
