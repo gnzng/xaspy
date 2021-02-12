@@ -66,5 +66,4 @@ rd(nr, raw=True)
 
 # Todo, coming soon:
 
-- basic Mössbauer fitting 
-- improve despiking
+[ ] improve despiking on site 
