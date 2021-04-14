@@ -1,4 +1,4 @@
-# xaspy - framework for xray absorption spectroscopy
+# 🔬xaspy - framework for xray absorption spectroscopy
 [in beta and development phase]
 
 # table of contents
