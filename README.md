@@ -1,15 +1,21 @@
 # xaspy - framework for xray absorption spectroscopy
 [in beta and development phase]
 
+# table of contents
+1. [installation](#installation)
+2. [basic functions](#basic-functions)
+3. [XMCD investigation](#xmcd-investigation)
+4. [import data](#import-data)
+5. [despiking of data](#despiking-of-data)
+
 Small module for doing xray absorption spectroscopy analysis and pre evaluation on beam time using python. More detailed information will follow soon. 
 
 
-## installation with PyPi
-xaspy can be installed from shell via PyPi
+## installation
+xaspy can be installed from shell via PyPi or downloaded here as the source code.
 ```bash
 pip install xaspy
 ```
-
 You can update to the newest version with: 
 
 ```bash
@@ -24,7 +30,7 @@ This section will be extended and the implemented functions, whenever I find som
 
 The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...).  
 
-### read in functions for experimental ASCII data 
+### import data 
 
 Different read in functions for special beamlines: e.g. VEKMAG/PM3 at BESSY II in Berlin. Dealing with large SPECS files. 
 
@@ -61,7 +67,6 @@ Alternatively you can also load the raw or spiked data with:
 ```python 
 rd(nr, raw=True)
 ```
-
 
 
 # Todo, coming soon:
