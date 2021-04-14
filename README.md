@@ -7,6 +7,7 @@
 3. [XMCD investigation](#xmcd-investigation)
 4. [import data](#import-data)
 5. [despiking of data](#despiking-of-data)
+6. [next steps](#next-steps)
 
 Small module for doing xray absorption spectroscopy analysis and pre evaluation on beam time using python. More detailed information will follow soon. 
 
@@ -69,6 +70,8 @@ rd(nr, raw=True)
 ```
 
 
-# Todo, coming soon:
+# next steps
 
 - [ ] improve fast despiking
+- [ ] working with pi-files for Mössbauer spectra
+
