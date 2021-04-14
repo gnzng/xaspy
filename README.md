@@ -27,19 +27,19 @@ pip install xaspy -U
 
 This section will be extended and the implemented functions, whenever I find something useful.
 
-### XMCD investigation
+## XMCD investigation
 
 The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...).  
 
-### import data 
+## import data 
 
 Different read in functions for special beamlines: e.g. VEKMAG/PM3 at BESSY II in Berlin. Dealing with large SPECS files. 
 
-### read in function for theoretical calculations
+## read in function for theoretical calculations
 
 read in functions for output files for programs like FEFF, multiX, xraylarch, quanty ...
 
-### despiking of data
+## despiking of data
 
 This function is to remove spikes from data while loading the data into the RAM.  It does not change the raw data. This module creates '.spike' file with list of rows to avoid, which will automatically be dropped while reading data in. Please use a basic read in function as follows:
 
