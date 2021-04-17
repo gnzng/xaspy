@@ -1,6 +1,6 @@
 # 🔬xaspy - framework for xray absorption spectroscopy
 
-🚧🚧🚧 under construction 🚧🚧🚧 
+🚧🚧🚧 (always) under construction 🚧🚧🚧 
 
 Small python module for  xray absorption spectroscopy analysis and pre-evaluation on beam times. 
 
@@ -35,7 +35,7 @@ The function XMCD merges and interpolates the spectra for same spin angular mome
 Different read in functions for special beamlines: e.g. VEKMAG/PM3 at BESSY II in Berlin. Dealing with large SPECS files. 
 
 ## Mössbauer
-First functions for the implementation of the Pi program for Mössbauer analysis. `readin.PiMoss('path/filename')` can no be used to import plotting data from the .dat-files generated from Pi(https://www.uni-due.de/~hm236ap/hoersten/home.html). Different implemented plotting funtions can be called from the class. 
+First functions for the implementation of the Pi program for Mössbauer analysis. `readin.PiMoss('path/filename')` can no be used to import plotting data from the .dat-files generated from [Pi](https://www.uni-due.de/~hm236ap/hoersten/home.html). Different implemented plotting funtions can be called from the class. 
 
 I would recommend using the following saving procedures:
 
@@ -83,5 +83,6 @@ rd(nr, raw=True)
 # next steps
 
 - [ ] improve fast despiking
-- [ ] working with pi-files for Mössbauer spectra
-
+- [ ] working with .rtf-files for Mössbauer spectra from Pi
+- [X] plot Mössbauer spectra from Pi
+- [X] fast and basic XMCD evaluation
