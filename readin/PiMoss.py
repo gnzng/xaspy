@@ -11,14 +11,14 @@ class PiMoss:
     https://www.uni-due.de/~hm236ap/hoersten/home.html
     takes path to .dat file. do not use .dat extension in name
     '''
-    def impspec(a):
-        '''
-        function to import the plot data as a pandas DataFrame
-        '''
-        return pd.read_csv(a, sep='\t',engine='python',skiprows=1,
-                           na_values='-',header=None)
     
     def __init__(self,path):
+        def impspec(a):
+            '''
+            function to import the plot data as a pandas DataFrame
+            '''
+            return pd.read_csv(a, sep='\t',engine='python',skiprows=1,
+                            na_values='-',header=None)        
         try:
             self.df   = impspec(path + '.dat')
             self.v    = np.array(self.df[0])  #returns velocity as numpy array
