@@ -1,15 +1,14 @@
 # 🔬xaspy - framework for xray absorption spectroscopy
 [in beta and development phase]
 
+Small module for doing xray absorption spectroscopy analysis and pre evaluation on beam time using python. The software is by no means meant to be high-end code, but serves in first place as workflow optimization.
+
 # table of contents
 1. [installation](#installation)
-2. [basic functions](#basic-functions)
-3. [XMCD investigation](#xmcd-investigation)
-4. [import data](#import-data)
-5. [despiking of data](#despiking-of-data)
-6. [next steps](#next-steps)
-
-Small module for doing xray absorption spectroscopy analysis and pre evaluation on beam time using python. More detailed information will follow soon. 
+2. [XAS](#xas)
+3. [import data](#import-data)
+4. [despiking of data](#despiking-of-data)
+5. [next steps](#next-steps)
 
 
 ## installation
@@ -23,23 +22,33 @@ You can update to the newest version with:
 pip install xaspy -U
 ```
 
-## basic functions
 
-This section will be extended and the implemented functions, whenever I find something useful.
+# XAS 
 
-## XMCD investigation
-
+## XMCD
 The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...).  
 
-## import data 
+# import data 
 
+## beam lines
 Different read in functions for special beamlines: e.g. VEKMAG/PM3 at BESSY II in Berlin. Dealing with large SPECS files. 
+
+## Mössbauer
+First functions for the implementation of the Pi program for Mössbauer analysis. `readin.PiMoss('path/filename')` can no be used to import plotting data from the .dat-files generated from Pi(https://www.uni-due.de/~hm236ap/hoersten/home.html). Different implemented plotting funtions can be called from the class. 
+
+I would recommend using the following saving procedures:
+
+| extension         |   content            |
+|-------------------|--------------------- |
+|filename.mos       |  raw data from measurement       |
+|filename.mos.rtf   | fitting information important for Pi |        
+|filename.dat       | exported ascii data table |
 
 ## read in function for theoretical calculations
 
 read in functions for output files for programs like FEFF, multiX, xraylarch, quanty ...
 
-## despiking of data
+# despiking of data
 
 This function is to remove spikes from data while loading the data into the RAM.  It does not change the raw data. This module creates '.spike' file with list of rows to avoid, which will automatically be dropped while reading data in. Please use a basic read in function as follows:
 
