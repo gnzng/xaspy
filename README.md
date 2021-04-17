@@ -1,7 +1,8 @@
 # 🔬xaspy - framework for xray absorption spectroscopy
-[in beta and development phase]
 
-Small module for doing xray absorption spectroscopy analysis and pre evaluation on beam time using python. The software is by no means meant to be high-end code, but serves in first place as workflow optimization.
+🚧🚧🚧 under construction 🚧🚧🚧 
+
+Small python module for  xray absorption spectroscopy analysis and pre-evaluation on beam times. 
 
 # table of contents
 1. [installation](#installation)
