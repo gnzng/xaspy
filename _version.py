@@ -1,5 +1,5 @@
 #! python
 
-__date__    = '2021-01-08'
-__version__ = '0.1.5'
+__date__    = '2021-04-17'
+__version__ = '0.1.6'
 __authors__ = "Damian Günzing"
