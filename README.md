@@ -83,6 +83,7 @@ rd(nr, raw=True)
 # next steps
 
 - [ ] improve fast despiking
+- [ ] fit convolution and energy shift between theoretic and measured spectrum
 - [ ] working with .rtf-files for Mössbauer spectra from Pi
 - [X] plot Mössbauer spectra from Pi
 - [X] fast and basic XMCD evaluation
