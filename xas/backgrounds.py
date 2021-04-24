@@ -35,17 +35,27 @@ def smooth(y, box_pts):
     return y_smooth
 
 #step function for branching ratio
-def step(a,tp,energy):
+def step(a,tp,energy,slope=None):
     '''
     takes:
     a      = step hight
     tp     = turning point of step function
     energy = numpy array
+    #optional:
+    slope = slope factor
     
     returns:
     step function as a np.array 
     '''
-    return np.array(a*(1/(1+np.exp(tp - energy))))
+    if slope == None:
+        return np.array(a*(1/(1+np.exp(tp - energy))))
+    
+    if type(slope) == float:
+        return np.array(a*(1/(1+np.exp(slope*(tp - energy)))))
+    else:
+        raise ValueError('slope factor has to be float, e.g. 2.0, 2.3, etc.')
+
+
 
     
 ###index function
