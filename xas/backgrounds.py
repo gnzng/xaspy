@@ -35,8 +35,17 @@ def smooth(y, box_pts):
     return y_smooth
 
 #step function for branching ratio
-def step(a,tf,xp):
-    return a*(1/(1+np.exp(tf - xp)))
+def step(a,tp,energy):
+    '''
+    takes:
+    a      = step hight
+    tp     = turning point of step function
+    energy = numpy array
+    
+    returns:
+    step function as a np.array 
+    '''
+    return np.array(a*(1/(1+np.exp(tp - energy))))
 
     
 ###index function
