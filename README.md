@@ -2,7 +2,7 @@
 
 🚧🚧🚧 (always) under construction 🚧🚧🚧 
 
-Small python module for  xray absorption spectroscopy analysis and pre-evaluation on beam times. 
+Small python module for  xray absorption spectroscopy analysis and pre-evaluation on beam times. Similar software: [larch](https://github.com/xraypy/xraylarch)
 
 # table of contents
 1. [installation](#installation)
