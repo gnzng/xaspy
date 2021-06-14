@@ -9,17 +9,27 @@ import pickle
 
 ###################
 ####XMCD######
-def XMCD(pdat,mdat,ene,det,mon,log):
+def XMCD(pdat,mdat,ene,det,mon,
+         log=False,xmin=None,xmax=None,xsize=10000):
     '''
     XMCD function:
-    pdat = positive lists
-    mdat = negative list 
-    ene = energy column
-    det = detector column
-    mon = monitor column
+    uses to pandas converted ascii data:
+    
+    pdat  = positive list of pandas objects
+    mdat  = negative list of pandas objects
+    ene   = energy column name of pandas object
+    det   = detector column name of pandas object
+    mon   = monitor column -> if no monitor wanted, put 'False'
+    log   = boolean, use logarithm for transmission experiments
+    xmin  = adjust minimum energy 
+    xmax  = adjust maximum energy
+    xsize = number of points for interpolation default 10000 
+            ! be careful: low point density can lead to ValueErrors due to 
+            ! rounding numbers
     '''
     t2pdat = pdat
     t2mdat = mdat
+    #photon energies: 
     pmin=[]
     pmax=[]
     for n in range(len(t2pdat)):
@@ -30,9 +40,16 @@ def XMCD(pdat,mdat,ene,det,mon,log):
     for n in range(len(t2mdat)):
         mmin.append(np.min(t2mdat[n][ene]))
         mmax.append(np.max(t2mdat[n][ene]))
-    xmin = np.max(pmin+mmin)
-    xmax = np.min(pmax+mmax)
-    xx = np.linspace(xmin+0.01,xmax-0.01,10000) # energy interpolation range
+    
+    #used energy range:
+    #choose whole range if not specified: 
+    if xmin == None:
+        xmin = np.max(pmin+mmin)
+    if xmax == None:
+        xmax = np.min(pmax+mmax)
+    
+    # energy interpolation range:
+    xx = np.linspace(xmin+0.01,xmax-0.01,xsize) 
     t3pdat=[] # alles interpolierte
     for n in range(len(t2pdat)):
         v1  = np.array(t2pdat[n][ene])
@@ -43,7 +60,7 @@ def XMCD(pdat,mdat,ene,det,mon,log):
                 v2  = np.log(v22/v21)
             else:
                 v2  = v21/v22
-        if mon ==False:
+        if mon == False:
             v2 = np.array(t2pdat[n][det])
         t3pdat.append(interpolate.interp1d(v1,v2)(xx)) 
     t3mdat=[]
@@ -56,6 +73,8 @@ def XMCD(pdat,mdat,ene,det,mon,log):
         if mon == False:
             v2 = np.array(t2mdat[n][det])
         t3mdat.append(interpolate.interp1d(v1,v2)(xx))
+        
+    #merging same helicities: 
     t4pdat=[] # all from +hel merged
     for k in range(0,len(xx)):
         t4pdat.append(np.sum([t3pdat[s][k] for s in range(len(t3pdat))])/int(len(t3pdat)))
@@ -65,22 +84,27 @@ def XMCD(pdat,mdat,ene,det,mon,log):
     t5pdat= np.array(t4pdat)
     t5mdat= np.array(t4mdat)
     pdm = t5pdat/t5mdat    #plus signal divided by minus signal
-    #correlation of plus and minus signal
+    
+    
+    #correlation of plus and minus signal via two linear functions: 
     corrpre = np.poly1d(np.polyfit(xx[:int(len(xx)*0.1)],pdm[:int(len(xx)*0.1 )],1))
     corrpost = np.poly1d(np.polyfit(xx[int(len(xx)-len(xx)*0.1):],pdm[int(len(xx)-len(xx)*0.1):],1))
     x1 = xx[2]
     x2 = xx[-2]
     cfy1 = corrpre(x1) #corr intens. at 
     cfy2 = corrpost(x2)
-    #correlated signal with pmerged
+    
+    #correlated signal with pmerged: 
     t5mdat = (t5mdat*(cfy1-x1*(cfy1-cfy2)/(x1-x2)+xx*(cfy1-cfy2)/(x1-x2)))
     #####
-    xas = (t5pdat+t5mdat)/2 
+    xas = (t5pdat+t5mdat)/2
+    
     #Subtracting backgrounds now:
     linbkg = np.poly1d(np.polyfit(xx[:int(len(xx)*0.1)],xas[:int(len(xx)*0.1 )],1))(xx)
     xas    = xas    - linbkg
     pxas   = t5pdat - linbkg
     mxas   = t5mdat - linbkg
+    
     #### now normalized to XAS maximum
     xmcd = (t5pdat-t5mdat)/np.max(xas)
     return xx, pxas, mxas, xas, xmcd
