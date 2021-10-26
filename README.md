@@ -1,8 +1,8 @@
 # 🔬xaspy - framework for xray absorption spectroscopy
 
-🚧🚧🚧 (always) under construction 🚧🚧🚧 
+🚧🚧🚧 (always) under construction, developing parallel to my PhD journey 🚧🚧🚧 
 
-Small python module for  xray absorption spectroscopy analysis and pre-evaluation on beam times. Similar software: [larch](https://github.com/xraypy/xraylarch)
+Small python module for  xray absorption spectroscopy analysis and pre-evaluation on beam times. Similar software (mostly for EXAFS): [larch](https://github.com/xraypy/xraylarch)
 
 # table of contents
 1. [installation](#installation)
