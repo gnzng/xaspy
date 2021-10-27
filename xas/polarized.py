@@ -10,7 +10,7 @@ import pickle
 ###################
 ####XMCD######
 def XMCD(pdat,mdat,ene,det,mon,
-         log=False,xmin=None,xmax=None,xsize=10000):
+         log=False,xmin=None,xmax=None,xsize=10000, norm='edge_jump'):
     '''
     XMCD function:
     uses to pandas converted ascii data:
@@ -26,6 +26,7 @@ def XMCD(pdat,mdat,ene,det,mon,
     xsize = number of points for interpolation default 10000 
             ! be careful: low point density can lead to ValueErrors due to 
             ! rounding numbers
+    norm  = choose normalization from ['white_line', 'edge_jump', 'pre_edge','None']
     '''
     t2pdat = pdat
     t2mdat = mdat
@@ -105,8 +106,36 @@ def XMCD(pdat,mdat,ene,det,mon,
     pxas   = t5pdat - linbkg
     mxas   = t5mdat - linbkg
     
-    #### now normalized to XAS maximum
-    xmcd = (t5pdat-t5mdat)/np.max(xas)
+
+    ### normalization:
+
+    norm_opt = ['white_line', 'edge_jump', 'pre_edge','None',None]
+
+    #choose factor: 
+    
+    try:
+        if norm == 'white_line':
+         norm_factor = float(np.max(xas))
+        
+        elif norm == 'edge_jump':
+            last_values  = int(xsize*0.05)
+            norm_factor  = np.mean(xas[:-last_values])
+        
+        elif norm == 'pre_edge':
+            last_values  = int(xsize*0.02)
+            norm_factor  = np.mean(xas[last_values:])
+        
+        elif norm in ['None',None]:
+            norm_factor = 1.0
+
+    except:
+        raise ValueError('normalization not clear, use {}'.format(norm_opt))
+    
+    xas = np.array(xas)/norm_factor
+    pxas = np.array(pxas)/norm_factor
+    mxas = np.array(mxas)/norm_factor
+    xmcd = np.array(pxas-mxas)    
+    
     return xx, pxas, mxas, xas, xmcd
 ### 
 
