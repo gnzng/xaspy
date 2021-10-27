@@ -1,2 +1,2 @@
 from .backgrounds import * 
-from .xmcd import *
+from .polarized import *
