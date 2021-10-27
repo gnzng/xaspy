@@ -2,8 +2,6 @@
 import numpy as np
 from scipy import interpolate
 import matplotlib.pyplot as plt
-import pandas
-import pickle
 #####
 
 
@@ -12,21 +10,33 @@ import pickle
 def XMCD(pdat,mdat,ene,det,mon,
          log=False,xmin=None,xmax=None,xsize=10000, norm='edge_jump'):
     '''
-    XMCD function:
-    uses to pandas converted ascii data:
-    
-    pdat  = positive list of pandas objects
-    mdat  = negative list of pandas objects
-    ene   = energy column name of pandas object
-    det   = detector column name of pandas object
-    mon   = monitor column -> if no monitor wanted, put 'False'
-    log   = boolean, use logarithm for transmission experiments
-    xmin  = adjust minimum energy 
-    xmax  = adjust maximum energy
-    xsize = number of points for interpolation default 10000 
-            ! be careful: low point density can lead to ValueErrors due to 
-            ! rounding numbers
-    norm  = choose normalization from ['white_line', 'edge_jump', 'pre_edge','None']
+    xray magnetic circular dichroism function
+
+    Arguments
+    ---------
+        
+        pdat    = positive list of pandas objects
+        mdat    = negative list of pandas objects
+        ene     = energy column name of pandas object
+        det     = detector column name of pandas object
+        mon     = monitor column -> if no monitor wanted, put 'False'
+        log     = boolean, use logarithm for transmission experiments
+        xmin    = adjust minimum energy 
+        xmax    = adjust maximum energy
+        xsize   = number of points for interpolation default 10000 
+                  ! be careful: low point density can lead to ValueErrors due to 
+                  ! rounding numbers
+        norm    = choose normalization from ['white_line', 'edge_jump', 'pre_edge','None']
+
+    Returns
+    --------
+
+    energy, plus_xas, minus_xas, averaged_xas, xmcd
+
+    Notes
+    --------
+
+    no notes 
     '''
     t2pdat = pdat
     t2mdat = mdat
