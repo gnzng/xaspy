@@ -150,9 +150,129 @@ def XMCD(pdat,mdat,ene,det,mon,
 ### 
 
 
-
-
 ########### HSYT functions:
+
+# mHYST
+#
+### new in 0.1.10, developed for many (mHYST) loops in one file:
+class mHYST:
+    '''
+    Arguments
+    ---------
+        
+        df      = pandas dataframe of multiple Hyst loops
+        ene     = energy column name of pandas object
+        det     = detector column name of pandas object
+        mon     = monitor column -> if no monitor wanted, put 'False'
+        ene_cut = energy cutoff, choose somewhere between both 
+                  measured energies
+        ratio   = either divide higher/lower or lower/higher energy
+    
+    Returns
+    --------
+    Nothing, but contains multiple functions:
+        - average_loops(), average specific loops
+        - plot_seperated(), plots all loops seperated
+        
+    Notes
+    --------
+    no notes 
+    
+    '''
+    
+    def __init__(self, df, ene, det, mon, ene_cut, ratio='higher/lower'):
+        
+        if not isinstance(df, pd.DataFrame):
+            raise ValueError('df is not a pd.DataFrame')
+        t1      = df
+        self.df = df
+        
+        try: 
+            #t2 at higher energy -> usually l2 edge, l3 at lower energies:
+            # normalizing signal to clock
+            t2, t3 = t1[t1[ene] >= ene_cut] , t1[t1[ene] <= ene_cut]
+            t2 = t2.reset_index()
+            t3 = t3.reset_index()
+        except:
+            raise ValueError('energy cut off failed')
+        
+        try:
+            if mon == False: 
+                t2['normlzd'] = t2[det]
+                t3['normlzd'] = t3[det]
+            else:
+                t2['normlzd'] = t2[det]/t2[mon]
+                t3['normlzd'] = t3[det]/t3[mon]
+        except:
+            raise ValueError('normalization failed')
+        
+        # now use t2 to continue algortithm
+        try:
+            if ratio == 'higher/lower':
+                t2['divided'] = t2['normlzd']/t3['normlzd']
+            elif ratio == 'lower/higher':
+                t2['divided'] = t3['normlzd']/t2['normlzd']
+        except:
+            raise ValueError('please choose a valid ratio')
+       
+        try:
+            len_t2  = len(t2)
+            
+            self.t2 = t2
+            
+            self.slope_ct = self.slope_count(t2).astype(int)
+            
+            self.len_per_loop = (len_t2/self.slope_ct).astype(int)
+            
+        except:
+            raise ValueError('could not build Hysteresis loop. different number of scans ? ')
+    
+    def slope_count(self,df):
+        '''
+        function returns the number of slopes in HYST loops
+        '''
+        df = df
+        magfield = np.array(df['Magnet Field'])
+        mag_sign = np.sign(magfield)
+        signchange = ((np.roll(mag_sign, 1) - mag_sign) != 0).astype(int)
+        return (np.sum(signchange)/4).astype(int)
+    
+    def plot_seperated(self):
+        for n in range(self.slope_ct):
+            plt.figure()
+            plt.title('loop {}'.format(n))
+            plt.plot(self.t2['Magnet Field'][n*self.len_per_loop:(n+1)*self.len_per_loop], 
+                     self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop])
+            plt.show()
+    def average_loops(self,av_list,return_data=False):
+        
+        ''' 
+        takes number of loops, check before with plot_seperated()
+        set return_data to True to get data as tuple(field, signal)
+        non plot mode otherwise returns plot of average loops
+        '''
+        self.av_list = av_list
+        toaverage = []
+        for n in av_list:
+            toaverage.append(self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop])
+        averaged = np.mean(toaverage,axis=0)
+        field = self.t2['Magnet Field'][:self.len_per_loop]
+        
+        if return_data == False:
+            plt.figure()
+            plt.title(f'average loops {*av_list,}')
+            plt.plot(field,averaged)
+            plt.show()
+        
+        elif return_data == True:
+            return (np.array(field),np.array(averaged))
+        
+        else:
+            raise ValueError('return_data mode not clear. use False or True')
+
+
+
+
 ###########
 ####HYST###
 def HYST(df,fld, ene, det, mon, Epre, Eedg):
@@ -213,6 +333,9 @@ def HYST2(df,fld, ene, det, mon, Epre, Eedg):
         field1.append(n)
     ############
     return field1,hyst1
+
+
+
 
 def HYST3en(df,fld, ene, det, mon, Epre, Eedg1, Eedg2):
     '''
