@@ -80,7 +80,10 @@ def XMCD(pdat,mdat,ene,det,mon,
         if mon != False:
             v21 = np.array(t2mdat[n][det])
             v22 = np.array(t2mdat[n][mon])
-            v2  = v21/v22
+            if log == True:
+                v2  = np.log(v22/v21)
+            else:
+                v2  = v21/v22
         if mon == False:
             v2 = np.array(t2mdat[n][det])
         t3mdat.append(interpolate.interp1d(v1,v2)(xx))
@@ -181,7 +184,7 @@ class mHYST:
     '''
     
     def __init__(self, df, ene, det, mon, ene_cut, ratio='higher/lower'):
-        
+        import pandas as pd
         if not isinstance(df, pd.DataFrame):
             raise ValueError('df is not a pd.DataFrame')
         t1      = df
