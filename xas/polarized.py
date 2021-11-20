@@ -5,10 +5,11 @@ import matplotlib.pyplot as plt
 #####
 
 
-###################
+
+        
 ####XMCD######
 def XMCD(pdat,mdat,ene,det,mon,
-         log=False,xmin=None,xmax=None,xsize=10000, norm='edge_jump'):
+         log=False,xmin=None,xmax=None,xsize=10000, norm='edge_jump',eshift=0):
     '''
     xray magnetic circular dichroism function
 
@@ -27,6 +28,7 @@ def XMCD(pdat,mdat,ene,det,mon,
                   ! be careful: low point density can lead to ValueErrors due to 
                   ! rounding numbers
         norm    = choose normalization from ['white_line', 'edge_jump', 'pre_edge','None']
+        eshift  = shift in energy, added to pdat values, default 0
 
     Returns
     --------
@@ -38,6 +40,7 @@ def XMCD(pdat,mdat,ene,det,mon,
 
     no notes 
     '''
+    from scipy import interpolate
     t2pdat = pdat
     t2mdat = mdat
     #photon energies: 
@@ -53,14 +56,13 @@ def XMCD(pdat,mdat,ene,det,mon,
         mmax.append(np.max(t2mdat[n][ene]))
     
     #used energy range:
-    #choose whole range if not specified: 
     if xmin == None:
         xmin = np.max(pmin+mmin)
     if xmax == None:
         xmax = np.min(pmax+mmax)
     
     # energy interpolation range:
-    xx = np.linspace(xmin+0.01,xmax-0.01,xsize) 
+    xx = np.linspace(xmin+0.1,xmax-0.1,xsize) 
     t3pdat=[] # alles interpolierte
     for n in range(len(t2pdat)):
         v1  = np.array(t2pdat[n][ene])
@@ -73,7 +75,10 @@ def XMCD(pdat,mdat,ene,det,mon,
                 v2  = v21/v22
         if mon == False:
             v2 = np.array(t2pdat[n][det])
-        t3pdat.append(interpolate.interp1d(v1,v2)(xx)) 
+        try:
+            t3pdat.append(interpolate.interp1d(v1,v2)(xx+float(eshift)/1000)) 
+        except:
+            raise ValueError('eshift to large for interpolation range? max Eshift ca. 100meV')
     t3mdat=[]
     for n in range(len(t2mdat)):
         v1  = np.array(t2mdat[n][ene])
@@ -119,7 +124,6 @@ def XMCD(pdat,mdat,ene,det,mon,
     pxas   = t5pdat - linbkg
     mxas   = t5mdat - linbkg
     
-
     ### normalization:
 
     norm_opt = ['white_line', 'edge_jump', 'pre_edge','None',None]
@@ -128,7 +132,7 @@ def XMCD(pdat,mdat,ene,det,mon,
     
     try:
         if norm == 'white_line':
-         norm_factor = float(np.max(xas))
+             norm_factor = float(np.max(xas))
         
         elif norm == 'edge_jump':
             last_values  = int(xsize*0.05)
