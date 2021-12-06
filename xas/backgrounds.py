@@ -32,7 +32,15 @@ def smooth(y, box_pts):
     '''
     box = np.ones(box_pts)/box_pts
     y_smooth = np.convolve(y, box, mode='same')
+    #
+    y_smooth_mean1 = np.mean(y_smooth[box_pts:box_pts+10])
+    y_smooth[:int(box_pts)] = y_smooth_mean1
+    #
+    y_smooth_mean2 = np.mean(y_smooth[-int(box_pts+10):])
+    y_smooth[-int(box_pts):] = y_smooth_mean2
+    #
     return y_smooth
+
 
 #step function for branching ratio
 def step(a,tp,energy,slope=None):
