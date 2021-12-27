@@ -263,6 +263,7 @@ class mHYST:
         for n in av_list:
             toaverage.append(self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop])
         averaged = np.mean(toaverage,axis=0)
+        self.std      = np.std(toaverage,axis=0) 
         field = self.t2['Magnet Field'][:self.len_per_loop]
         
         if return_data == False:
