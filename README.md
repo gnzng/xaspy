@@ -6,13 +6,14 @@ Small python module for  xray absorption spectroscopy analysis and pre-evaluatio
 
 # table of contents
 1. [installation](#installation)
-2. [XAS](#xas)
-3. [import data](#import-data)
-4. [despiking of data](#despiking-of-data)
-5. [next steps](#next-steps)
+2. [telegram bot](#telegram-bot)
+3. [XAS](#xas)
+4. [import data](#import-data)
+5. [despiking of data](#despiking-of-data)
+6. [next steps](#next-steps)
 
 
-## installation
+# installation
 xaspy can be installed from shell via PyPi or downloaded here as the source code.
 ```bash
 pip install xaspy
@@ -24,12 +25,11 @@ pip install xaspy -U
 ```
 
 
-# XAS 
+# telegram bot
 
+The telgram bot can be added via link: [t.me/xaspy_bot](https://t.me/xaspy_bot), or writing to @xaspy_bot. First implementations are returning Xray absorption edges of specific elements.
 
-## Telegram bot
-
-The telgram bot can be added via link: [t.me/xaspy_bot](https://t.me/xaspy_bot), or writing to @xaspy_bot. First implementations are returning Xray absorption edges of specific elements. 
+# XAS  
 
 ## XMCD
 The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...).  
