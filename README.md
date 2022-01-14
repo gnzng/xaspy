@@ -26,6 +26,11 @@ pip install xaspy -U
 
 # XAS 
 
+
+## Telegram bot
+
+The telgram bot can be added via link: [t.me/xaspy_bot](https://t.me/xaspy_bot), or writing to @xaspy_bot. First implementations are returning Xray absorption edges of specific elements. 
+
 ## XMCD
 The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...).  
 
@@ -87,3 +92,4 @@ rd(nr, raw=True)
 - [ ] working with .rtf-files for Mössbauer spectra from Pi
 - [X] plot Mössbauer spectra from Pi
 - [X] fast and basic XMCD evaluation
+- [X] added telegram bot
