@@ -24,7 +24,7 @@ def look_edges_db(element,edge='all'):
         try: 
             for n in edges.keys():
                 if n.startswith(edge):
-                    string = string + str(n) + '\t'+ str(edges[n][0])+' eV' + '\t' + str(edges[n][1])+ '\t' + str(edges[n][2]) + '\n'          
+                    string = string + str(n) + '\t | '+ str(edges[n][0])+' eV' + '\t | ' + str(edges[n][1])+ '\t | ' + str(edges[n][2]) + '\n'          
         except:
             raise ValueError('cant find edge')
     return string 

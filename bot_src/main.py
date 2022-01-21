@@ -7,7 +7,7 @@ from tele_bot import run
 def main():
 
     try:
-        with open('src/api.key') as f:
+        with open('api.key') as f:
             bot_token = str(f.readline())
         f.close()
     except KeyError:
