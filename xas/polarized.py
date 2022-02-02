@@ -162,6 +162,8 @@ def XMCD(pdat,mdat,ene,det,mon,
 # mHYST
 #
 ### new in 0.1.10, developed for many (mHYST) loops in one file:
+### added log option in 0.1.13
+
 class mHYST:
     '''
     Arguments
@@ -174,6 +176,7 @@ class mHYST:
         ene_cut = energy cutoff, choose somewhere between both 
                   measured energies
         ratio   = either divide higher/lower or lower/higher energy
+        log     = neg. logarithm for tranmission experiments, default False
     
     Returns
     --------
@@ -187,7 +190,7 @@ class mHYST:
     
     '''
     
-    def __init__(self, df, ene, det, mon, ene_cut, ratio='higher/lower'):
+    def __init__(self, df, ene, det, mon, ene_cut, ratio='higher/lower',log=False):
         import pandas as pd
         if not isinstance(df, pd.DataFrame):
             raise ValueError('df is not a pd.DataFrame')
@@ -207,6 +210,9 @@ class mHYST:
             if mon == False: 
                 t2['normlzd'] = t2[det]
                 t3['normlzd'] = t3[det]
+            elif log == True:
+                t2['normlzd'] = -np.log(t2[det]/t2[mon])
+                t3['normlzd'] = -np.log(t3[det]/t3[mon])
             else:
                 t2['normlzd'] = t2[det]/t2[mon]
                 t3['normlzd'] = t3[det]/t3[mon]
