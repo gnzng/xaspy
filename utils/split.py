@@ -20,7 +20,7 @@ def split(file):
     clean=[]
     clst=[]
     with open(file,'r')as f:
-        regexp = re.compile(r'^\d+')
+        regexp = re.compile(r'^-?\d+\.?\d*')
         for line in f:
             if '#C' in line:
                 clst.append(line.replace('\n',''))
