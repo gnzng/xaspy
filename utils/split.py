@@ -33,8 +33,6 @@ def split(file):
                 clean.append(line.replace('\n',''))
             if not line.strip():
                 clean.append('splitsignal')
-    #for i in clean:
-    #    print(i)
     for n in range(1,10000):
         if clean[0] == 'splitsignal':
             clean.pop(0)

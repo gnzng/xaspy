@@ -1,10 +1,14 @@
 from sre_compile import isstring
+from sys import exc_info
 from edge import look_edges_db
+import pytest
 
 
-print(isstring(look_edges_db('Co')))
-print(isstring(look_edges_db('Co','K')))
-print(isstring(look_edges_db('Co','L3')))
-print(isstring(look_edges_db('Co','L')))
-#print(isstring(look_edges_db('Co','P')))
-#print(iserr(look_edges_db('magnetesindcool')))
+assert isstring(look_edges_db('Co'))
+assert isstring(look_edges_db('Co','K'))
+assert isstring(look_edges_db('Co','L3'))
+assert isstring(look_edges_db('Co','L'))
+
+with pytest.raises(ValueError) as exc_info:
+    look_edges_db('magnetesindcool')
+    

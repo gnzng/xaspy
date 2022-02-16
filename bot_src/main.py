@@ -1,8 +1,6 @@
 import os
 from tele_bot import run
 
-
-
 # Main entrypoint
 def main():
 
