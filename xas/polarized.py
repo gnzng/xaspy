@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 #####
 
 
-
         
 ####XMCD######
 def XMCD(pdat,mdat,ene,det,mon,

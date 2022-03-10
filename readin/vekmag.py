@@ -9,7 +9,7 @@ import pickle
 ####readin functions from different beamlines:
 ##VEKMAG### BESSY2
 ### define get header function from large, unsplit and file
-def VEKgetheader(b,file): #its written that b is scan number! 
+def getheader(b,file): #its written that b is scan number! 
     r = open(file,'r')
     mylist = r.read().splitlines() 
     matching = [p for p in mylist if "#L" in p]
@@ -28,7 +28,7 @@ def VEKgetheader(b,file): #its written that b is scan number!
     c = rscan.index(b)
     return header[c]
 
-def VEKgetcommand(b,file):
+def getcommand(b,file):
     r = open(file,'r')
     mylist = r.read().splitlines() 
     scannr =   [p for p in mylist if "#S" in p]
@@ -45,7 +45,7 @@ def VEKgetcommand(b,file):
 
 
 #function for read in a is number of scan
-def VEKreadin(a,file,raw=False):
+def readin(a,file,raw=False):
     a = a
     dff = pd.read_csv(file+'_{}.dat'.format(a), delim_whitespace=True,header=0,names=getheader(a,file),comment='#')
     if raw==False:
@@ -60,4 +60,3 @@ def VEKreadin(a,file,raw=False):
     else: 
         pass
     return dff
-
