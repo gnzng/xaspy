@@ -90,11 +90,14 @@ Alternatively you can also load the raw or spiked data with:
 rd(nr, raw=True)
 ```
 
-# next steps
+# next steps (maybe)
 
+- [ ] write docs
+- [ ] continous integration and testing
 - [ ] improve fast despiking
 - [ ] fit convolution and energy shift between theoretic and measured spectrum
 - [ ] working with .rtf-files for Mössbauer spectra from Pi
+- [x] write unittests
 - [x] plot Mössbauer spectra from Pi
 - [x] fast and basic XMCD evaluation
 - [x] added telegram bot

@@ -45,3 +45,5 @@ class group():
                              for attr, atp, atv in zip(attrs, atypes,atvalues)]))
         html.append("</table>")
         return ''.join(html)
+
+

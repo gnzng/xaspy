@@ -3,8 +3,6 @@ import numpy as np
 from scipy import interpolate
 import matplotlib.pyplot as plt
 #####
-
-
         
 ####XMCD######
 def XMCD(pdat,mdat,ene,det,mon,
@@ -387,6 +385,10 @@ def HYST3en(df,fld, ene, det, mon, Epre, Eedg1, Eedg2):
 
 
 
+
+
+
+
 ##########sumrules functions##
 def sumrules(xx,xas00, xmcd, px,nh):
     '''
@@ -413,3 +415,78 @@ def LDS(xx, xmcd, px):
     #print(q,p)
     lds=(4/3)*q/(3*p-2*q)
     return lds
+
+
+
+
+
+def orbital_to_spin_ratio(xmcd = None , xp = None, xq=None,
+                          group = None, orbital='3d'):
+    import numpy as np
+    """
+    function for orbital to spin ratio from xmcd 
+
+    Arguments
+    ---------
+        
+    xmcd    = xmcd spectra as np.array if group is none
+    xp,xq   = index of XMCD for dividing (xp) and end of XMCD (xq)
+              default values xp = len/2 and xq = last value
+    group   = group of a sample
+    orbital = probed orbital 3d or 4f 
+        
+    Returns
+    --------
+
+    orbital to spin ratio attached to group if group was provided
+    
+    if no group was provided prints orbital to spin ratio
+
+    Notes
+    --------
+
+    no notes 
+    """
+    
+    if xmcd != None:
+        xmcd = xmcd
+        
+    elif group != None:
+        xmcd = group.xmcd 
+    else:
+        raise ValueError('insert XMCD as group or numpy array')
+        
+    if xp == None:
+        xp = int(len(xmcd)/2) 
+    
+    A = np.cumsum(xmcd[:xp])[-1]
+    B = np.cumsum(xmcd[xp:xq])[-1]
+    
+    def lds_self_3d(A,B):
+        return (2/3)*((A+B)/(A-2*B))
+    
+
+    def lds_self_4f(A,B):
+        return (A+B)/((A-(3/2)*B))
+    
+    if orbital == '3d':
+        if group == None:
+            return lds_self_3d(A,B)
+        
+        if group != None:
+            group.lds = lds_self_3d(A,B)
+            
+    
+    elif orbital == '4f':
+        if group == None:
+            return lds_self_4f(A,B)
+        
+        if group != None:
+            group.lds = lds_self_4f(A,B)
+        
+    
+    else:
+        raise ValueError('choose a valid probed orbital: 3d or 4f')
+    
+    
+  
