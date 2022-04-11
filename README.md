@@ -1,10 +1,10 @@
-# 🔬 xaspy - framework for xray absorption spectroscopy
+# 🔬 xaspy - framework for X-ray absorption spectroscopy
 
 🚧🚧🚧 (always) under construction, developing parallel to my PhD journey 🚧🚧🚧
 
-Small python module for xray absorption spectroscopy analysis and pre-evaluation during beam times. Similar software (mostly for EXAFS): [larch](https://github.com/xraypy/xraylarch). Mostly magnetic circular dichroism.
+This small python module want to help with X-ray absorption spectroscopy analysis and pre-evaluation during beam times. Similar software (mostly for EXAFS): [larch](https://github.com/xraypy/xraylarch). Strong focus on X-ray magnetic circular dichroism [XMCD](https://en.wikipedia.org/wiki/X-ray_magnetic_circular_dichroism).
 
-# table of contents
+# toc of readme
 
 1. [installation](#installation)
 2. [telegram bot](#telegram-bot)
@@ -13,35 +13,43 @@ Small python module for xray absorption spectroscopy analysis and pre-evaluation
 5. [despiking of data](#despiking-of-data)
 6. [next steps](#next-steps)
 
-# installation
+# 💻 installation
 
 xaspy can be installed from shell via PyPi or downloaded here from github as the source code.
 
+The necessary requirements can be found in requirement.txt file. Install via pip: 
 ```bash
 pip install xaspy
 ```
 
-You can update to the newest version with:
+Update to the newest version with:
 
 ```bash
 pip install xaspy -U
 ```
 
-# telegram bot
+# 🤖 telegram bot
 
-The telegram bot can be added via link to you contacts: [t.me/xaspy_bot](https://t.me/xaspy_bot), or writing to @xaspy_bot. First implementations are returning X-ray absorption edges of specific elements. It uses [XrayDB](https://github.com/xraypy/XrayDB).
+As a small side project I coded a small telegram bot (see folder bot_src). The telegram bot can be added via link to you contacts: [t.me/xaspy_bot](https://t.me/xaspy_bot) or writing to @xaspy_bot. The first implementation is returning the X-ray absorption edges for your specific elements. The backend is provided by [XrayDB](https://github.com/xraypy/XrayDB).
 
-# XAS
+# 🔬 XAS
 
 ## XMCD
 
-The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...).
+The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...). Also different normalization factors are possible. 
 
-# import data
+## backgrounds
+
+the ```xaspy.xas.backgrounds``` module provides multiple possible backgrounds to correct the measured data. 
+
+# ⬇️ import data
 
 ## beam lines
 
-Different read in functions for special beamlines: e.g. VEKMAG/PM3 at BESSY II in Berlin. Dealing with large SPECS files.
+Different read in functions for special beamlines: e.g. VEKMAG/PM3 at BESSY II in Berlin. 
+
+## SPECS files
+Large SPECS files usually contain multiple runs in one large ASCII file. A very useful SPECS file splitter (split.py) can be found in folder utils. For usage see the docstring in the file header.  
 
 ## Mössbauer
 
@@ -61,7 +69,7 @@ read in functions for output files for programs like FEFF, multiX, xraylarch, qu
 
 # despiking of data
 
-This function is to remove spikes from data while loading the data into the RAM. It does not change the raw data. This module creates '.spike' file with list of rows to avoid, which will automatically be dropped while reading data in. Please use a basic read in function as follows:
+This function is to remove spikes from data while loading the data into the RAM. It does not change the raw data. This function creates '.spike' file with list of columns to avoid, which will automatically be dropped while reading data in via a pandas df. Please use a basic read in function as follows:
 
 ```python
 #function for read in a is number of scan
@@ -90,10 +98,12 @@ Alternatively you can also load the raw or spiked data with:
 rd(nr, raw=True)
 ```
 
-# next steps (maybe)
+# next steps (maybe/hopefully)
 
-- [ ] write docs
+- [ ] write (better) docs
+- [ ] improve telegram bot
 - [ ] continous integration and testing
+- [ ] Total Electron Yield measurement correction 
 - [ ] improve fast despiking
 - [ ] fit convolution and energy shift between theoretic and measured spectrum
 - [ ] working with .rtf-files for Mössbauer spectra from Pi
