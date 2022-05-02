@@ -5,7 +5,7 @@ class info():
     simple class for printing package info all at once
     """
     def __init__(self):
-        print( __name__)
-        print(__date__) 
-        print(__version__)
-        print(__authors__)
+        print('name:','\t', __name__)
+        print('updated:','\t', __date__) 
+        print('version:','\t',  __version__)
+        print('authors:','\t',  __authors__)
