@@ -1,4 +1,5 @@
 #imports:
+from logging import raiseExceptions
 import numpy as np
 from scipy import interpolate
 import matplotlib.pyplot as plt
@@ -390,7 +391,7 @@ def HYST3en(df,fld, ene, det, mon, Epre, Eedg1, Eedg2):
 
 
 ##########sumrules functions##
-def sumrules(xx,xas00, xmcd, px,nh):
+def sumrules_function(xx,xas00, xmcd, px,nh):
     '''
     xx = global energy scale
     xas00 = xas - stepfunction
@@ -405,6 +406,8 @@ def sumrules(xx,xas00, xmcd, px,nh):
     sz=nh*(3*p-2*q)/(2*r)
     return sz,lz
 
+
+# old sum rule function, please do not use, thanks
 def LDS(xx, xmcd, px):
     '''
     xx = global energy scale
@@ -424,7 +427,7 @@ def orbital_to_spin_ratio(xmcd = None , xp = None, xq=None,
                           group = None, orbital='3d'):
     import numpy as np
     """
-    function for orbital to spin ratio from xmcd 
+    function for orbital to spin ratio from xmcd without <Tz> term 
 
     Arguments
     ---------
@@ -489,4 +492,3 @@ def orbital_to_spin_ratio(xmcd = None , xp = None, xq=None,
         raise ValueError('choose a valid probed orbital: 3d or 4f')
     
     
-  
