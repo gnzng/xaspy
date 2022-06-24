@@ -17,7 +17,8 @@ This small python module want to help with X-ray absorption spectroscopy analysi
 
 xaspy can be installed from shell via PyPi or downloaded here from github as the source code.
 
-The necessary requirements can be found in requirement.txt file. Install via pip: 
+The necessary requirements can be found in requirement.txt file. Install via pip:
+
 ```bash
 pip install xaspy
 ```
@@ -36,20 +37,25 @@ As a small side project I coded a small telegram bot (see folder bot_src). The t
 
 ## XMCD
 
-The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...). Also different normalization factors are possible. 
+The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...). Also different normalization factors are possible.
+
+## Hysteresis loops
+
+`class mHYST` with included functions `plot_separated() ` to plot multiple hysteresis loops separated. `average_loops()` takes the loop numbers and averages them.
 
 ## backgrounds
 
-the ```xaspy.xas.backgrounds``` module provides multiple possible backgrounds to correct the measured data. 
+the `xaspy.xas.backgrounds` module provides multiple possible backgrounds to correct the measured data.
 
 # ⬇️ import data
 
 ## beam lines
 
-Different read in functions for special beamlines: e.g. VEKMAG/PM3 at BESSY II in Berlin. 
+Different read in functions for special beamlines: e.g. VEKMAG/PM3 at BESSY II in Berlin.
 
 ## SPECS files
-Large SPECS files usually contain multiple runs in one large ASCII file. A very useful SPECS file splitter (split.py) can be found in folder utils. For usage see the docstring in the file header.  
+
+Large SPECS files usually contain multiple runs in one large ASCII file. A very useful SPECS file splitter (split.py) can be found in folder utils. For usage see the docstring in the file header.
 
 ## Mössbauer
 
@@ -103,7 +109,7 @@ rd(nr, raw=True)
 - [ ] write (better) docs
 - [ ] improve telegram bot
 - [ ] continous integration and testing
-- [ ] Total Electron Yield measurement correction 
+- [ ] Total Electron Yield measurement correction
 - [ ] improve fast despiking
 - [ ] fit convolution and energy shift between theoretic and measured spectrum
 - [ ] working with .rtf-files for Mössbauer spectra from Pi

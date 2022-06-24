@@ -255,6 +255,15 @@ class mHYST:
             plt.plot(self.t2['Magnet Field'][n*self.len_per_loop:(n+1)*self.len_per_loop], 
                      self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop])
             plt.show()
+
+    def plot_separated(self):
+        for n in range(self.slope_ct):
+            plt.figure()
+            plt.title('loop {}'.format(n))
+            plt.plot(self.t2['Magnet Field'][n*self.len_per_loop:(n+1)*self.len_per_loop], 
+                     self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop])
+            plt.show()
+
     def average_loops(self,av_list,return_data=False):
         
         ''' 
