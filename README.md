@@ -39,9 +39,9 @@ As a small side project I coded a small telegram bot (see folder bot_src). The t
 
 The function XMCD merges and interpolates the spectra for same spin angular momentum of the photon. Correlates the curves on top of each other and builds the XMCD and XAS signal. After that subtraction of different backgrounds is possible (linear, stepfunctions, ...). Also different normalization factors are possible.
 
-## Hysteresis loops
+## hysteresis loops
 
-`class mHYST` with included functions `plot_separated() ` to plot multiple hysteresis loops separated. `average_loops()` takes the loop numbers and averages them.
+For multiple hysteresis curves in one file use class `mHYST` with included functions. Use `plot_separated()` to plot multiple hysteresis loops separated. Function `average_loops()` takes the loop numbers and averages them.
 
 ## backgrounds
 
