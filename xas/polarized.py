@@ -24,7 +24,8 @@ def XMCD(pdat,mdat,ene,det,mon,
         xmax    = adjust maximum energy
         xsize   = number of points for interpolation default 10000 
                   ! be careful: low point density can lead to ValueErrors due to 
-                  ! rounding numbers
+                  ! rounding numbers, 
+                  ! set to None, if no interpolation is needed/wanted
         norm    = choose normalization from ['white_line', 'edge_jump', 'pre_edge','None']
         eshift  = shift in energy, added to pdat values, default 0
 
@@ -60,8 +61,11 @@ def XMCD(pdat,mdat,ene,det,mon,
         xmax = np.min(pmax+mmax)
     
     # energy interpolation range:
-    xx = np.linspace(xmin+0.1,xmax-0.1,xsize) 
-    t3pdat=[] # alles interpolierte
+    if xsize == None: 
+        xx = np.array(t2pdat[n][ene])
+    else:
+        xx = np.linspace(xmin+0.1,xmax-0.1,xsize) 
+    t3pdat = [] # list to addinterpolated
     for n in range(len(t2pdat)):
         v1  = np.array(t2pdat[n][ene])
         if mon != False:
@@ -73,11 +77,14 @@ def XMCD(pdat,mdat,ene,det,mon,
                 v2  = v21/v22
         if mon == False:
             v2 = np.array(t2pdat[n][det])
-        try:
-            t3pdat.append(interpolate.interp1d(v1,v2)(xx+float(eshift)/1000)) 
-        except:
-            raise ValueError('eshift to large for interpolation range? max Eshift ca. 100meV')
-    t3mdat=[]
+        if xsize == None:
+            t3pdat.append(v2)
+        else:
+            try:
+                t3pdat.append(interpolate.interp1d(v1,v2)(xx+float(eshift)/1000)) 
+            except:
+                raise ValueError('error at plus helicity; check interpolation range eshift to large for interpolation range? max Eshift ca. 100meV.')
+    t3mdat = []
     for n in range(len(t2mdat)):
         v1  = np.array(t2mdat[n][ene])
         if mon != False:
@@ -89,8 +96,14 @@ def XMCD(pdat,mdat,ene,det,mon,
                 v2  = v21/v22
         if mon == False:
             v2 = np.array(t2mdat[n][det])
-        t3mdat.append(interpolate.interp1d(v1,v2)(xx))
-        
+        if xsize == None:
+            t3mdat.append(v2)
+        else:
+            try:
+                t3mdat.append(interpolate.interp1d(v1,v2)(xx))
+            except:
+                raise ValueError('error at minus helicity; check interpolation range.')
+
     #merging same helicities: 
     t4pdat=[] # all from +hel merged
     for k in range(0,len(xx)):
@@ -133,11 +146,11 @@ def XMCD(pdat,mdat,ene,det,mon,
              norm_factor = float(np.max(xas))
         
         elif norm == 'edge_jump':
-            last_values  = int(xsize*0.05)
+            last_values  = int(len(xx)*0.05)
             norm_factor  = np.mean(xas[:-last_values])
         
         elif norm == 'pre_edge':
-            last_values  = int(xsize*0.02)
+            last_values  = int(len(xx)*0.02)
             norm_factor  = np.mean(xas[last_values:])
         
         elif norm in ['None',None]:
