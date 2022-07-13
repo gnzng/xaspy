@@ -16,7 +16,6 @@ class get_scan_metadata():
     def energy(self,df):
         '''
         get properties of energy steps
-        
         '''
         df = df
         arr = np.array(df['Energy'])

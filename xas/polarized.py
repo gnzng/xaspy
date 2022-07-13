@@ -1,5 +1,6 @@
 #imports:
 from logging import raiseExceptions
+#from attr import field
 import numpy as np
 from scipy import interpolate
 import matplotlib.pyplot as plt
@@ -144,7 +145,6 @@ def XMCD(pdat,mdat,ene,det,mon,
     try:
         if norm == 'white_line':
              norm_factor = float(np.max(xas))
-        
         elif norm == 'edge_jump':
             last_values  = int(len(xx)*0.05)
             norm_factor  = np.mean(xas[:-last_values])
@@ -175,17 +175,19 @@ def XMCD(pdat,mdat,ene,det,mon,
 ### new in 0.1.10, developed for many (mHYST) loops in one file:
 ### added log option in 0.1.13
 
+### added plot together in 0.2.2 and removed typo function, 
+### automated ene_cut
+
 class mHYST:
     '''
     Arguments
     ---------
         
         df      = pandas dataframe of multiple Hyst loops
-        ene     = energy column name of pandas object
+        fld   = field column name of pandas object df
+        ene     = energy column name of pandas object df
         det     = detector column name of pandas object
         mon     = monitor column -> if no monitor wanted, put 'False'
-        ene_cut = energy cutoff, choose somewhere between both 
-                  measured energies
         ratio   = either divide higher/lower or lower/higher energy
         log     = neg. logarithm for tranmission experiments, default False
     
@@ -193,7 +195,8 @@ class mHYST:
     --------
     Nothing, but contains multiple functions:
         - average_loops(), average specific loops
-        - plot_seperated(), plots all loops seperated
+        - plot_separated(onefigure=False), plots all loops separated, if onefigure=True,
+            it will plot every loop in one figure 
         
     Notes
     --------
@@ -201,13 +204,36 @@ class mHYST:
     
     '''
     
-    def __init__(self, df, ene, det, mon, ene_cut, ratio='higher/lower',log=False):
+    def __init__(self, df, fld, ene, det, mon, ratio='higher/lower',log=False):
         import pandas as pd
+        header = list(df)
+        #CHECKS: 
         if not isinstance(df, pd.DataFrame):
-            raise ValueError('df is not a pd.DataFrame')
+            raise ValueError('df is not a pd.DataFrame type')
+            
+        for n in [fld,ene,det]:
+            if n not in header:
+                raise ValueError('{} is not a column name of the pd.DataFrame'.format(n))
+        
+        if mon == 'False':
+            mon = False
+        
+        if mon != False:
+            if mon not in header:
+                raise ValueError('{} is not a column name of the pd.DataFrame'.format(mon))
+
+        
+        ### CHECKS end
+        
+
+        
         t1      = df
         self.df = df
+        self.fld = fld
         
+        # find energy for cutoff:    
+        ene_cut = np.around((np.max(df[ene]) - np.min(df[ene]))/2 + np.min(df[ene]),2)
+
         try: 
             #t2 at higher energy -> usually l2 edge, l3 at lower energies:
             # normalizing signal to clock
@@ -219,6 +245,7 @@ class mHYST:
         
         try:
             if mon == False: 
+                print('no monitor selected')
                 t2['normlzd'] = t2[det]
                 t3['normlzd'] = t3[det]
             elif log == True:
@@ -244,38 +271,49 @@ class mHYST:
             
             self.t2 = t2
             
-            self.slope_ct = self.slope_count(t2).astype(int)
+            self.slope_ct = self.slope_count(t2,fld).astype(int)
             
             self.len_per_loop = (len_t2/self.slope_ct).astype(int)
             
         except:
-            raise ValueError('could not build Hysteresis loop. different number of scans ? ')
+            raise ValueError('Could not build Hysteresis loop. Different number of scans? ')
     
-    def slope_count(self,df):
+    def slope_count(self,df,fld):
         '''
         function returns the number of slopes in HYST loops
         '''
-        df = df
-        magfield = np.array(df['Magnet Field'])
+        df, fld = df, fld
+        magfield = np.array(df[fld])
         mag_sign = np.sign(magfield)
         signchange = ((np.roll(mag_sign, 1) - mag_sign) != 0).astype(int)
         return (np.sum(signchange)/4).astype(int)
     
     def plot_seperated(self):
-        for n in range(self.slope_ct):
-            plt.figure()
-            plt.title('loop {}'.format(n))
-            plt.plot(self.t2['Magnet Field'][n*self.len_per_loop:(n+1)*self.len_per_loop], 
-                     self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop])
-            plt.show()
+        return print('use plot_separated()')
 
-    def plot_separated(self):
-        for n in range(self.slope_ct):
+    def plot_separated(self,onefigure=False):
+        if onefigure == False:
+            for n in range(self.slope_ct):
+                plt.figure()
+                plt.title('loop {}'.format(n))
+                plt.plot(self.t2[self.fld][n*self.len_per_loop:(n+1)*self.len_per_loop], 
+                            self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop])        
+                plt.xlabel('magnetic field [arb. units]')
+                plt.ylabel('absorption [arb. units]')
+                plt.show()
+        elif onefigure == True:
             plt.figure()
-            plt.title('loop {}'.format(n))
-            plt.plot(self.t2['Magnet Field'][n*self.len_per_loop:(n+1)*self.len_per_loop], 
-                     self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop])
+            for n in range(self.slope_ct):
+                plt.plot(self.t2[self.fld][n*self.len_per_loop:(n+1)*self.len_per_loop], 
+                            self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop],
+                            label = '{}'.format(n))
+            plt.xlabel('magnetic field [arb. units]')
+            plt.ylabel('absorption [arb. units]')
+            plt.legend('loop number')
             plt.show()
+        else:
+            raise ValueError('please use onefigure=True/False')
+
 
     def average_loops(self,av_list,return_data=False):
         
@@ -290,7 +328,7 @@ class mHYST:
             toaverage.append(self.t2['divided'][n*self.len_per_loop:(n+1)*self.len_per_loop])
         averaged = np.mean(toaverage,axis=0)
         self.std      = np.std(toaverage,axis=0) 
-        field = self.t2['Magnet Field'][:self.len_per_loop]
+        field = self.t2[self.fld][:self.len_per_loop]
         
         if return_data == False:
             plt.figure()
@@ -304,69 +342,6 @@ class mHYST:
         else:
             raise ValueError('return_data mode not clear. use False or True')
 
-
-
-
-###########
-####HYST###
-def HYST(df,fld, ene, det, mon, Epre, Eedg):
-    '''
-    HYST : edge/pre_edge
-    VEKMAG compatible
-    df     = takes pandas data frame
-    fld    = column name of field values
-    ene    = column name of energy values
-    det    = column name of detector values
-    mon    = column name of monitor
-    Epre    = energy of pre edge point
-    Eedg    = energy of edge point
-    '''
-    df = df
-    hyst1  = []
-    field1 = []
-    for n in np.arange(-6.8,6.8,0.1):
-        n   = np.around(n,1)
-        t1  = df[np.around(df[ene],1) == Eedg]
-        t1  = t1[np.around(t1[fld],1) == n]
-        t11 = np.mean(t1[det]/t1[mon])
-        t1  = df[np.around(df[ene],1) == Epre]
-        t1  = t1[np.around(t1[fld],1) == n]
-        t22 = np.mean(t1[det]/t1[mon])
-        hyst1.append(t11/t22)
-        field1.append(n)
-    ############
-    return field1,hyst1
-
-
-###########
-####HYST###
-def HYST2(df,fld, ene, det, mon, Epre, Eedg):
-    '''
-    HYST2 : (edge - pre_edge)/pre_edge
-    VEKMAG compatible
-    df     = takes pandas data frame
-    fld    = column name of field values
-    ene    = column name of energy values
-    det    = column name of detector values
-    mon    = column name of monitor
-    Epre    = energy of pre edge point
-    Eedg    = energy of edge point
-    '''
-    df = df
-    hyst1  = []
-    field1 = []
-    for n in np.arange(-6.8,6.8,0.1):
-        n   = np.around(n,1)
-        t1  = df[np.around(df[ene],1) == Eedg]
-        t1  = t1[np.around(t1[fld],1) == n]
-        t11 = np.mean(t1[det]/t1[mon])
-        t1  = df[np.around(df[ene],1) == Epre]
-        t1  = t1[np.around(t1[fld],1) == n]
-        t22 = np.mean(t1[det]/t1[mon])
-        hyst1.append((t11 - t22)/t22)
-        field1.append(n)
-    ############
-    return field1,hyst1
 
 
 

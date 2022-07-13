@@ -2,14 +2,43 @@ import unittest
 
 import pickle
 import numpy as np
-from polarized import orbital_to_spin_ratio 
+import pandas as pd
+import pytest
+
+#imports from xaspy: 
+from polarized import (orbital_to_spin_ratio,
+mHYST
+)
 from xas import group
 
 
+
+
+# HYST tests:
+df = pickle.load(open('xas/test_files/pd_dataframe_hyst_example1.pickle','rb'))
+def test_import_df():
+    # nr: 'TrajScan31914-001_0001.txt'
+    assert isinstance(df,pd.DataFrame)
+
+hystclass = mHYST(df,'Magnet Field','Energy','LY','Clock',ratio='lower/higher',
+            log=True)
+
+def test_hyst_from_df():
+    assert hystclass
+    assert isinstance(hystclass.average_loops([n for n in range(1,16)],return_data=True),tuple)
+
+def test_raise_value_error_bc_wrong_column_name():
+    with pytest.raises(ValueError):
+        mHYST(df,'_non_existent_column','Energy','LY','Clock',ratio='lower/higher',
+            log=True).average_loops([n for n in range(1,16)],return_data=True)
+
+
+
+
+# XMCD tests
+
 testgroup = group()
-
-testgroup.xmcd = pickle.load(open('xas/test_spectra/xmcd_co.pickle','rb'))
-
+testgroup.xmcd = pickle.load(open('xas/test_files/xmcd_co.pickle','rb'))
 testxmcd = testgroup.xmcd
 
 
