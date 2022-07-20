@@ -4,11 +4,7 @@ __authors__  = 'Damian Guenzing'
 
 
 _version__ = None
-<<<<<<< Updated upstream
 with open(os.path.join('xaspy', '_version.py'), 'r') as version_file:
-=======
-with open(os.path.join('_version.py'), 'r') as version_file:
->>>>>>> Stashed changes
     lines = version_file.readlines()
     for line in lines:
         line = line[:-1]
@@ -19,19 +15,11 @@ with open(os.path.join('_version.py'), 'r') as version_file:
 
 setup(
   name = 'xaspy',         # How you named your package folder (MyLib)
-<<<<<<< Updated upstream
   packages = ['xaspy',
               'xaspy.utils',
               'xaspy.xas',
               'xaspy.readin',
               'xaspy.despike'], 
-=======
-  packages = ['',
-              'utils',
-              'xas',
-              'readin',
-              'despike'], 
->>>>>>> Stashed changes
   version = __version__,      
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'package for analysis of experimental xray absorption spectroscopy data',   # Give a short description about your library
@@ -40,12 +28,12 @@ setup(
   url = 'https://github.com/gnzng/xaspy',   # Provide either the link to your github or to your website
   #download_url = 'https://github.com/gnzng/xaspy/archive/v_0_1_4.tar.gz',    
   keywords = ['xray absorption spectroscopy', 'xmcd', 'synchrotron'],   
-  install_requires=[ 
-          'numpy',
-          'pandas',
-          'scipy',
-          'matplotlib'
-      ],
+  #install_requires=[ 
+  #        'numpy',
+  #        'pandas',
+  #        'scipy',
+  #        'matplotlib'
+  #    ],
   classifiers=[
     'Development Status :: 4 - Beta',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
     'Intended Audience :: Developers',      # Define that your audience are developers
