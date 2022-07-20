@@ -1,9 +1,11 @@
+from importlib.resources import path
 import unittest
 
 import pickle
 import numpy as np
 import pandas as pd
 import pytest
+import os
 
 #imports from xaspy: 
 from polarized import (orbital_to_spin_ratio,
@@ -15,7 +17,13 @@ from xas import group
 
 
 # HYST tests:
-df = pickle.load(open('xas/test_files/pd_dataframe_hyst_example1.pickle','rb'))
+
+path_to_current_file = os.path.realpath(__file__)
+current_directory = os.path.split(path_to_current_file)[0]
+path_to_file = os.path.join(current_directory, "test_files/pd_dataframe_hyst_example1.pickle")
+df = pickle.load(open(path_to_file,'rb'))
+
+
 def test_import_df():
     # nr: 'TrajScan31914-001_0001.txt'
     assert isinstance(df,pd.DataFrame)
@@ -37,8 +45,15 @@ def test_raise_value_error_bc_wrong_column_name():
 
 # XMCD tests
 
+
+
 testgroup = group()
-testgroup.xmcd = pickle.load(open('xas/test_files/xmcd_co.pickle','rb'))
+
+path_to_current_file = os.path.realpath(__file__)
+current_directory = os.path.split(path_to_current_file)[0]
+path_to_file = os.path.join(current_directory, "test_files/xmcd_co.pickle")
+testgroup.xmcd = pickle.load(open(path_to_file,'rb'))
+
 testxmcd = testgroup.xmcd
 
 

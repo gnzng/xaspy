@@ -26,14 +26,15 @@ setup(
   author = __authors__,                     # Type in your name
   author_email = 'gnzng@protonmail.ch',      # Type in your E-Mail
   url = 'https://github.com/gnzng/xaspy',   # Provide either the link to your github or to your website
-  #download_url = 'https://github.com/gnzng/xaspy/archive/v_0_1_4.tar.gz',    
   keywords = ['xray absorption spectroscopy', 'xmcd', 'synchrotron'],   
-  #install_requires=[ 
-  #        'numpy',
-  #        'pandas',
-  #        'scipy',
-  #        'matplotlib'
-  #    ],
+  install_requires=[ 
+          'numpy',
+          'pandas',
+          'scipy',
+          'matplotlib',
+          'python-telegram-bot',
+          'xraydb'
+      ],
   classifiers=[
     'Development Status :: 4 - Beta',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
     'Intended Audience :: Developers',      # Define that your audience are developers
