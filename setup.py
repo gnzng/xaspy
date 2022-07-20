@@ -4,7 +4,11 @@ __authors__  = 'Damian Guenzing'
 
 
 _version__ = None
+<<<<<<< Updated upstream
 with open(os.path.join('xaspy', '_version.py'), 'r') as version_file:
+=======
+with open(os.path.join('_version.py'), 'r') as version_file:
+>>>>>>> Stashed changes
     lines = version_file.readlines()
     for line in lines:
         line = line[:-1]
@@ -15,11 +19,19 @@ with open(os.path.join('xaspy', '_version.py'), 'r') as version_file:
 
 setup(
   name = 'xaspy',         # How you named your package folder (MyLib)
+<<<<<<< Updated upstream
   packages = ['xaspy',
               'xaspy.utils',
               'xaspy.xas',
               'xaspy.readin',
               'xaspy.despike'], 
+=======
+  packages = ['',
+              'utils',
+              'xas',
+              'readin',
+              'despike'], 
+>>>>>>> Stashed changes
   version = __version__,      
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'package for analysis of experimental xray absorption spectroscopy data',   # Give a short description about your library
