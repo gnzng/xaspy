@@ -20,7 +20,7 @@ from xas import group
 
 path_to_current_file = os.path.realpath(__file__)
 current_directory = os.path.split(path_to_current_file)[0]
-path_to_file = os.path.join(current_directory, "test_files/pd_dataframe_hyst_example1.pickle")
+path_to_file = os.path.join(current_directory, "../test_files/pd_dataframe_hyst_example1.pickle")
 df = pickle.load(open(path_to_file,'rb'))
 
 
@@ -51,7 +51,7 @@ testgroup = group()
 
 path_to_current_file = os.path.realpath(__file__)
 current_directory = os.path.split(path_to_current_file)[0]
-path_to_file = os.path.join(current_directory, "test_files/xmcd_co.pickle")
+path_to_file = os.path.join(current_directory, "../test_files/xmcd_co.pickle")
 testgroup.xmcd = pickle.load(open(path_to_file,'rb'))
 
 testxmcd = testgroup.xmcd

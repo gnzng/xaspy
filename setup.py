@@ -18,8 +18,7 @@ setup(
   packages = ['xaspy',
               'xaspy.utils',
               'xaspy.xas',
-              'xaspy.readin',
-              'xaspy.despike'], 
+              'xaspy.readin'], 
   version = __version__,      
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'package for analysis of experimental xray absorption spectroscopy data',   # Give a short description about your library
