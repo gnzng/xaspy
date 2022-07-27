@@ -12,9 +12,9 @@ idna==3.3
 iniconfig==1.1.1
 kiwisolver==1.4.4
 matplotlib==3.5.2
-numpy==1.21.6
+numpy
 packaging==21.3
-pandas==1.4.3
+pandas
 Pillow==9.2.0
 pluggy==1.0.0
 py==1.11.0
