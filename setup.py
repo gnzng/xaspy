@@ -1,6 +1,6 @@
 import os
 from distutils.core import setup
-__authors__  = 'Damian Guenzing'
+__authors__  = 'Damian Guenzing \nAlpha T. N\'Diaye'
 
 
 _version__ = None
@@ -18,7 +18,8 @@ setup(
   packages = ['xaspy',
               'xaspy.utils',
               'xaspy.xas',
-              'xaspy.readin'], 
+              'xaspy.readin',
+              'xaspy.beamlines',], 
   version = __version__,      
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = 'package for analysis of experimental xray absorption spectroscopy data',   # Give a short description about your library
