@@ -487,5 +487,42 @@ def orbital_to_spin_ratio(xmcd = None , xp = None, xq=None,
     
     else:
         raise ValueError('choose a valid probed orbital: 3d or 4f')
-    
-    
+
+def Lz(xmcd, xas, c=1, l=2, nh=1):
+    '''
+    xmcd = numpy array of XMCD as in mu_p - mu_m
+    xas  = numpy array of step function corrected XAS as in (mu_p + mu_m)/2
+    c    = s:0, p:1, d:2, f:3, initial orbital
+    l    = s:0, p:1, d:2, f:3, final orbital
+    nh   = number of holes
+    '''
+
+    factor = (1/2)*((c*(c+1))-(l*(l+1))-2)/((l*(l+1)))
+    # xas is (mu_p + mu_m)/2
+    lz = (nh/factor)*(np.cumsum(xmcd)[-1]/(3*np.cumsum(xas)[-1]))
+    return float(lz)
+
+
+def Sz(xmcd, xas, c=1, l=2, nh=1, tz=0, x_div=None) -> float:
+    '''
+    sum rule taken from:
+        Carra, P., Thole, B. T., Altarelli, M., & Wang, X. (1993). 
+        X-ray circular dichroism and local magnetic fields. 
+        Phys Rev Lett, 70(5), 694-697. 
+        doi:10.1103/PhysRevLett.70.694
+    xmcd = numpy array of XMCD as in mu_p - mu_m
+    xas  = numpy array of step function corrected XAS as in (mu_p + mu_m)/2
+    c    = s:0, p:1, d:2, f:3, initial orbital
+    l    = s:0, p:1, d:2, f:3, final orbital
+    nh   = number of holes
+    tz   = magnetic dipole term
+    '''
+    if x_div is None:
+        x_div = int(len(xmcd)/2)
+
+    tz_part = ((l*(l+1)*(l*(l+1)+2*c*(c+1)+4)-3*(c-1)**2
+               *(c+2)**2)/(6*l*c*(l+1)*nh))*tz
+    spec_part = (np.cumsum(xmcd[x_div:])[-1]-((c+1)/c)
+                 * np.cumsum(xmcd[:x_div])[-1])/(3 * np.cumsum(xas)[-1])
+    sz = (spec_part - tz_part)*((3*c*nh)/((l*(l+1)-2-c*(c+1))))
+    return float(sz)
