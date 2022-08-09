@@ -105,7 +105,7 @@ def XMCD(pdat,mdat,ene,det,mon,
             except:
                 raise ValueError('error at minus helicity; check interpolation range.')
 
-    #merging same helicities: 
+    # merging same helicities: 
     t4pdat=[] # all from +hel merged
     for k in range(0,len(xx)):
         t4pdat.append(np.sum([t3pdat[s][k] for s in range(len(t3pdat))])/int(len(t3pdat)))
@@ -207,7 +207,7 @@ class mHYST:
     def __init__(self, df, fld, ene, det, mon, ratio='higher/lower',log=False):
         import pandas as pd
         header = list(df)
-        #CHECKS: 
+        # CHECKS: 
         if not isinstance(df, pd.DataFrame):
             raise ValueError('df is not a pd.DataFrame type')
             
@@ -235,7 +235,7 @@ class mHYST:
         ene_cut = np.around((np.max(df[ene]) - np.min(df[ene]))/2 + np.min(df[ene]),2)
 
         try: 
-            #t2 at higher energy -> usually l2 edge, l3 at lower energies:
+            # t2 at higher energy -> usually l2 edge, l3 at lower energies:
             # normalizing signal to clock
             t2, t3 = t1[t1[ene] >= ene_cut] , t1[t1[ene] <= ene_cut]
             t2 = t2.reset_index()
@@ -488,7 +488,9 @@ def orbital_to_spin_ratio(xmcd = None , xp = None, xq=None,
     else:
         raise ValueError('choose a valid probed orbital: 3d or 4f')
 
-def Lz(xmcd, xas, c=1, l=2, nh=1):
+def Lz(xmcd, xas, c=1, l=2, nh=1, 
+        last_number_xas = 1,
+        last_number_xmcd = 1) -> float :
     '''
     xmcd = numpy array of XMCD as in mu_p - mu_m
     xas  = numpy array of step function corrected XAS as in (mu_p + mu_m)/2
@@ -499,11 +501,14 @@ def Lz(xmcd, xas, c=1, l=2, nh=1):
 
     factor = (1/2)*((c*(c+1))-(l*(l+1))-2)/((l*(l+1)))
     # xas is (mu_p + mu_m)/2
-    lz = (nh/factor)*(np.cumsum(xmcd)[-1]/(3*np.cumsum(xas)[-1]))
+    lz = (nh/factor)*(np.cumsum(xmcd)[-last_number_xmcd]/
+                        (3*np.cumsum(xas)[-last_number_xas]))
     return float(lz)
 
 
-def Sz(xmcd, xas, c=1, l=2, nh=1, tz=0, x_div=None) -> float:
+def Sz(xmcd, xas, c=1, l=2, nh=1, tz=0, edge_div=None,
+        last_number_xas = 1,
+        last_number_xmcd = 1) -> float:
     '''
     sum rule taken from:
         Carra, P., Thole, B. T., Altarelli, M., & Wang, X. (1993). 
@@ -516,13 +521,17 @@ def Sz(xmcd, xas, c=1, l=2, nh=1, tz=0, x_div=None) -> float:
     l    = s:0, p:1, d:2, f:3, final orbital
     nh   = number of holes
     tz   = magnetic dipole term
+    edge_div = if None, middle of spectrum, relative shift to calculated middle of spectrum based 
+                on index number 
     '''
-    if x_div is None:
+    if edge_div is None:
         x_div = int(len(xmcd)/2)
-
+    elif isinstance(edge_div, int): 
+        x_div = int(len(xmcd)/2) + edge_div
+    
     tz_part = ((l*(l+1)*(l*(l+1)+2*c*(c+1)+4)-3*(c-1)**2
-               *(c+2)**2)/(6*l*c*(l+1)*nh))*tz
+                *(c+2)**2)/(6*l*c*(l+1)*nh))*tz
     spec_part = (np.cumsum(xmcd[x_div:])[-1]-((c+1)/c)
-                 * np.cumsum(xmcd[:x_div])[-1])/(3 * np.cumsum(xas)[-1])
+                    * np.cumsum(xmcd[:x_div])[-last_number_xmcd])/(3 * np.cumsum(xas)[-last_number_xas])
     sz = (spec_part - tz_part)*((3*c*nh)/((l*(l+1)-2-c*(c+1))))
     return float(sz)
