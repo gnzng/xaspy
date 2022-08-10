@@ -178,11 +178,15 @@ def XMCD(pdat,mdat,ene,det,mon,
 ### added plot together in 0.2.2 and removed typo function, 
 ### automated ene_cut
 
+# version 0.3.0 generalized for more possible magnetic field header names
+
 class mHYST:
     '''
+    --- class was significantly changed with update 0.3.0 ---
+
     Arguments
     ---------
-        
+
         df      = pandas dataframe of multiple Hyst loops
         fld   = field column name of pandas object df
         ene     = energy column name of pandas object df
@@ -190,27 +194,27 @@ class mHYST:
         mon     = monitor column -> if no monitor wanted, put 'False'
         ratio   = either divide higher/lower or lower/higher energy
         log     = neg. logarithm for tranmission experiments, default False
-    
+
     Returns
     --------
     Nothing, but contains multiple functions:
         - average_loops(), average specific loops
         - plot_separated(onefigure=False), plots all loops separated, if onefigure=True,
-            it will plot every loop in one figure 
-        
+        it will plot every loop in one figure
+
     Notes
     --------
-    no notes 
-    
+    no notes
+
     '''
     
-    def __init__(self, df, fld, ene, det, mon, ratio='higher/lower',log=False):
+    def __init__(self, df, fld, ene, det, mon, ratio='higher/lower', log=False):
         import pandas as pd
         header = list(df)
         # CHECKS: 
         if not isinstance(df, pd.DataFrame):
             raise ValueError('df is not a pd.DataFrame type')
-            
+
         for n in [fld,ene,det]:
             if n not in header:
                 raise ValueError('{} is not a column name of the pd.DataFrame'.format(n))
@@ -268,11 +272,8 @@ class mHYST:
        
         try:
             len_t2  = len(t2)
-            
-            self.t2 = t2
-            
+            self.t2 = t2 
             self.slope_ct = self.slope_count(t2,fld).astype(int)
-            
             self.len_per_loop = (len_t2/self.slope_ct).astype(int)
             
         except:
@@ -289,7 +290,7 @@ class mHYST:
         return (np.sum(signchange)/4).astype(int)
     
     def plot_seperated(self):
-        return print('use plot_separated()')
+        raise SyntaxError('use plot_separated()')
 
     def plot_separated(self,onefigure=False):
         if onefigure == False:
@@ -338,7 +339,6 @@ class mHYST:
         
         elif return_data == True:
             return (np.array(field),np.array(averaged))
-        
         else:
             raise ValueError('return_data mode not clear. use False or True')
 
