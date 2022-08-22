@@ -1,5 +1,7 @@
 # 🔬 xaspy - framework for X-ray absorption spectroscopy
 
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/gnzng/xaspy/Python%20package/main?style=flat-square)
+
 🚧🚧🚧 (always) under construction, developing parallel to my PhD journey 🚧🚧🚧
 
 --- larger update to v0.3.0 currently developing on second branch ---
