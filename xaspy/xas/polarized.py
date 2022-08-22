@@ -542,6 +542,11 @@ def Lz(
     xmcd, xas, c=1, l=2, nh=1, last_number_xas=1, last_number_xmcd=1
 ) -> float:
     """
+    sum rule taken from:
+        Carra, P., Thole, B. T., Altarelli, M., & Wang, X. (1993).
+        X-ray circular dichroism and local magnetic fields.
+        Phys Rev Lett, 70(5), 694-697.
+        doi:10.1103/PhysRevLett.70.694
     xmcd = numpy array of XMCD as in mu_p - mu_m
     xas  = numpy array of step function corrected XAS as in (mu_p + mu_m)/2
     c    = s:0, p:1, d:2, f:3, initial orbital
@@ -549,7 +554,7 @@ def Lz(
     nh   = number of holes
     """
 
-    factor = (1 / 2) * ((c * (c + 1)) - (l * (l + 1)) - 2) / ((l * (l + 1)))
+    factor = (1 / 2) * ((l * (l + 1)) - (c * (c + 1)) + 2) / ((l * (l + 1)))
     # xas is (mu_p + mu_m)/2
     lz = (nh / factor) * (
         np.cumsum(xmcd)[-last_number_xmcd]
@@ -582,24 +587,26 @@ def Sz(
     nh   = number of holes
     tz   = magnetic dipole term
     edge_div = if None, middle of spectrum, relative shift to calculated middle of spectrum based
-                on index number
+               on index number
     """
     if edge_div is None:
         x_div = int(len(xmcd) / 2)
-    elif isinstance(edge_div, int):
+    else:
         x_div = int(len(xmcd) / 2) + edge_div
 
     tz_part = (
         (
             l * (l + 1) * (l * (l + 1) + 2 * c * (c + 1) + 4)
-            - 3 * (c - 1) ** 2 * (c + 2) ** 2
+            - ((3 * (c - 1) ** 2) * (c + 2) ** 2)
         )
         / (6 * l * c * (l + 1) * nh)
     ) * tz
+
     spec_part = (
-        np.cumsum(xmcd[x_div:])[-1]
-        - ((c + 1) / c) * np.cumsum(xmcd[:x_div])[-last_number_xmcd]
+        np.cumsum(xmcd[:x_div])[-1]
+        - (((c + 1) / c) * np.cumsum(xmcd[x_div:])[-last_number_xmcd])
     ) / (3 * np.cumsum(xas)[-last_number_xas])
+
     sz = (spec_part - tz_part) * (
         (3 * c * nh) / ((l * (l + 1) - 2 - c * (c + 1)))
     )
