@@ -1,3 +1,5 @@
+#! python
+
 # imports:
 
 # # from attr import field
@@ -539,7 +541,7 @@ def orbital_to_spin_ratio(
 
 
 def Lz(
-    xmcd, xas, c=1, l=2, nh=1, last_number_xas=1, last_number_xmcd=1
+    xmcd, xas, c=1, l=2, nh=1, tz=None, last_number_xas=1, last_number_xmcd=1
 ) -> float:
     """
     sum rule taken from:
@@ -552,6 +554,8 @@ def Lz(
     c    = s:0, p:1, d:2, f:3, initial orbital
     l    = s:0, p:1, d:2, f:3, final orbital
     nh   = number of holes
+    tz   = can be provided, but will not be used for calculating orbital
+           moment
     """
 
     factor = (1 / 2) * ((l * (l + 1)) - (c * (c + 1)) + 2) / ((l * (l + 1)))
