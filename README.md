@@ -2,6 +2,7 @@
 
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/gnzng/xaspy/Python%20package/main?style=flat-square)
 ![Downloads PyPi (branch)](https://img.shields.io/pypi/dm/xaspy?style=flat-square)
+![Python 3.8](https://img.shields.io/badge/python-3.8+-blue.svg?style=flat-square)
 
 
 🚧🚧🚧 (always) under construction, developing parallel to my PhD journey 🚧🚧🚧
