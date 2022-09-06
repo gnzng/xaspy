@@ -2,14 +2,11 @@
 
 # imports:
 
-# # from attr import field
 import numpy as np
-from scipy import interpolate
 import matplotlib.pyplot as plt
+from scipy import interpolate
 
-#####
 
-####XMCD######
 def XMCD(
     pdat,
     mdat,
@@ -22,7 +19,7 @@ def XMCD(
     xsize=10000,
     norm="edge_jump",
     eshift=0,
-):
+) -> tuple:
     """
     xray magnetic circular dichroism function
 
@@ -38,10 +35,11 @@ def XMCD(
         xmin    = adjust minimum energy
         xmax    = adjust maximum energy
         xsize   = number of points for interpolation default 10000
-                  ! be careful: low point density can lead to ValueErrors due to
-                  ! rounding numbers,
+                  ! be careful: low point density can lead to ValueErrors due
+                  ! to rounding numbers,
                   ! set to None, if no interpolation is needed/wanted
-        norm    = choose normalization from ['white_line', 'edge_jump', 'pre_edge','None']
+        norm    = choose normalization from ['white_line', 'edge_jump',
+                  'pre_edge','None']
         eshift  = shift in energy, added to pdat values, default 0
 
     Returns
@@ -54,7 +52,6 @@ def XMCD(
 
     no notes
     """
-    from scipy import interpolate
 
     t2pdat = pdat
     t2mdat = mdat
@@ -71,29 +68,29 @@ def XMCD(
         mmax.append(np.max(t2mdat[n][ene]))
 
     # used energy range:
-    if xmin == None:
+    if xmin is None:
         xmin = np.max(pmin + mmin)
-    if xmax == None:
+    if xmax is None:
         xmax = np.min(pmax + mmax)
 
     # energy interpolation range:
-    if xsize == None:
+    if xsize is None:
         xx = np.array(t2pdat[n][ene])
     else:
         xx = np.linspace(xmin + 0.1, xmax - 0.1, xsize)
     t3pdat = []  # list to addinterpolated
     for n in range(len(t2pdat)):
         v1 = np.array(t2pdat[n][ene])
-        if mon != False:
+        if mon is not False:
             v21 = np.array(t2pdat[n][det])
             v22 = np.array(t2pdat[n][mon])
-            if log == True:
+            if log is True:
                 v2 = np.log(v22 / v21)
             else:
                 v2 = v21 / v22
-        if mon == False:
+        if mon is False:
             v2 = np.array(t2pdat[n][det])
-        if xsize == None:
+        if xsize is None:
             t3pdat.append(v2)
         else:
             try:
@@ -102,21 +99,23 @@ def XMCD(
                 )
             except:
                 raise ValueError(
-                    "error at plus helicity; check interpolation range eshift to large for interpolation range? max Eshift ca. 100meV."
+                    'error at plus helicity; check interpolation range ' +
+                    'eshift to large for interpolation range? ' +
+                    'max Eshift ca. 100meV.'
                 )
     t3mdat = []
     for n in range(len(t2mdat)):
         v1 = np.array(t2mdat[n][ene])
-        if mon != False:
+        if mon is not False:
             v21 = np.array(t2mdat[n][det])
             v22 = np.array(t2mdat[n][mon])
-            if log == True:
+            if log is True:
                 v2 = np.log(v22 / v21)
             else:
                 v2 = v21 / v22
-        if mon == False:
+        if mon is False:
             v2 = np.array(t2mdat[n][det])
-        if xsize == None:
+        if xsize is None:
             t3mdat.append(v2)
         else:
             try:
@@ -149,8 +148,8 @@ def XMCD(
     )
     corrpost = np.poly1d(
         np.polyfit(
-            xx[int(len(xx) - len(xx) * 0.1) :],
-            pdm[int(len(xx) - len(xx) * 0.1) :],
+            xx[int(len(xx) - len(xx) * 0.1):],
+            pdm[int(len(xx) - len(xx) * 0.1):],
             1,
         )
     )
@@ -174,7 +173,7 @@ def XMCD(
     pxas = t5pdat - linbkg
     mxas = t5mdat - linbkg
 
-    ### normalization:
+    # normalization:
 
     norm_opt = ["white_line", "edge_jump", "pre_edge", "None", None]
 
@@ -208,15 +207,15 @@ def XMCD(
 ###
 
 
-########### HSYT functions:
+# HSYT functions:
 
 # mHYST
 #
-### new in 0.1.10, developed for many (mHYST) loops in one file:
-### added log option in 0.1.13
+# new in 0.1.10, developed for many (mHYST) loops in one file:
+# added log option in 0.1.13
 
-### added plot together in 0.2.2 and removed typo function,
-### automated ene_cut
+# added plot together in 0.2.2 and removed typo function,
+# automated ene_cut
 
 # version 0.3.0 generalized for more possible magnetic field header names
 
@@ -240,8 +239,9 @@ class mHYST:
     --------
     Nothing, but contains multiple functions:
         - average_loops(), average specific loops
-        - plot_separated(onefigure=False), plots all loops separated, if onefigure=True,
-        it will plot every loop in one figure
+        - plot_separated(onefigure=False), plots all loops separated,
+          if onefigure=True,
+          it will plot every loop in one figure
 
     Notes
     --------
@@ -268,13 +268,13 @@ class mHYST:
         if mon == "False":
             mon = False
 
-        if mon != False:
+        if mon is not False:
             if mon not in header:
                 raise ValueError(
                     "{} is not a column name of the pd.DataFrame".format(mon)
                 )
 
-        ### CHECKS end
+        # CHECKS end
 
         t1 = df
         self.df = df
@@ -295,11 +295,11 @@ class mHYST:
             raise ValueError("energy cut off failed")
 
         try:
-            if mon == False:
+            if mon is False:
                 print("no monitor selected")
                 t2["normlzd"] = t2[det]
                 t3["normlzd"] = t3[det]
-            elif log == True:
+            elif log is True:
                 t2["normlzd"] = -np.log(t2[det] / t2[mon])
                 t3["normlzd"] = -np.log(t3[det] / t3[mon])
             else:
@@ -342,30 +342,30 @@ class mHYST:
         raise SyntaxError("use plot_separated()")
 
     def plot_separated(self, onefigure=False):
-        if onefigure == False:
+        if onefigure is False:
             for n in range(self.slope_ct):
                 plt.figure()
                 plt.title("loop {}".format(n))
                 plt.plot(
                     self.t2[self.fld][
-                        n * self.len_per_loop : (n + 1) * self.len_per_loop
+                        n * self.len_per_loop:(n + 1) * self.len_per_loop
                     ],
                     self.t2["divided"][
-                        n * self.len_per_loop : (n + 1) * self.len_per_loop
+                        n * self.len_per_loop:(n + 1) * self.len_per_loop
                     ],
                 )
                 plt.xlabel("magnetic field [arb. units]")
                 plt.ylabel("absorption [arb. units]")
                 plt.show()
-        elif onefigure == True:
+        elif onefigure is True:
             plt.figure()
             for n in range(self.slope_ct):
                 plt.plot(
                     self.t2[self.fld][
-                        n * self.len_per_loop : (n + 1) * self.len_per_loop
+                        n * self.len_per_loop:(n + 1) * self.len_per_loop
                     ],
                     self.t2["divided"][
-                        n * self.len_per_loop : (n + 1) * self.len_per_loop
+                        n * self.len_per_loop:(n + 1) * self.len_per_loop
                     ],
                     label="{}".format(n),
                 )
@@ -388,20 +388,20 @@ class mHYST:
         for n in av_list:
             toaverage.append(
                 self.t2["divided"][
-                    n * self.len_per_loop : (n + 1) * self.len_per_loop
+                    n * self.len_per_loop:(n + 1) * self.len_per_loop
                 ]
             )
         averaged = np.mean(toaverage, axis=0)
         self.std = np.std(toaverage, axis=0)
         field = self.t2[self.fld][: self.len_per_loop]
 
-        if return_data == False:
+        if return_data is False:
             plt.figure()
             plt.title(f"average loops {*av_list,}")
             plt.plot(field, averaged)
             plt.show()
 
-        elif return_data == True:
+        elif return_data is True:
             return (np.array(field), np.array(averaged))
         else:
             raise ValueError("return_data mode not clear. use False or True")
@@ -442,7 +442,7 @@ def HYST3en(df, fld, ene, det, mon, Epre, Eedg1, Eedg2):
     return field1, hyst1, hyst2
 
 
-##########sumrules functions##
+# sumrules functions
 def sumrules_function(xx, xas00, xmcd, px, nh):
     """
     xx = global energy scale
@@ -475,42 +475,41 @@ def LDS(xx, xmcd, px):
 def orbital_to_spin_ratio(
     xmcd=None, xp=None, xq=None, group=None, orbital="3d"
 ):
-    import numpy as np
 
     """
     function for orbital to spin ratio from xmcd without <Tz> term
 
     Arguments
     ---------
-        
+
     xmcd    = xmcd spectra as np.array if group is none
     xp,xq   = index of XMCD for dividing (xp) and end of XMCD (xq)
               default values xp = len/2 and xq = last value
     group   = group of a sample
-    orbital = probed orbital 3d or 4f 
-        
+    orbital = probed orbital 3d or 4f
+
     Returns
     --------
 
     orbital to spin ratio attached to group if group was provided
-    
+ 
     if no group was provided prints orbital to spin ratio
 
     Notes
     --------
 
-    no notes 
+    no notes
     """
 
-    if xmcd != None:
+    if xmcd is not None:
         xmcd = xmcd
 
-    elif group != None:
+    elif group is not None:
         xmcd = group.xmcd
     else:
         raise ValueError("insert XMCD as group or numpy array")
 
-    if xp == None:
+    if xp is None:
         xp = int(len(xmcd) / 2)
 
     A = np.cumsum(xmcd[:xp])[-1]
@@ -523,17 +522,17 @@ def orbital_to_spin_ratio(
         return (A + B) / ((A - (3 / 2) * B))
 
     if orbital == "3d":
-        if group == None:
+        if group is None:
             return lds_self_3d(A, B)
 
-        if group != None:
+        if group is not None:
             group.lds = lds_self_3d(A, B)
 
     elif orbital == "4f":
-        if group == None:
+        if group is None:
             return lds_self_4f(A, B)
 
-        if group != None:
+        if group is not None:
             group.lds = lds_self_4f(A, B)
 
     else:
@@ -557,6 +556,7 @@ def Lz(
     tz   = can be provided, but will not be used for calculating orbital
            moment
     """
+    tz = tz
 
     factor = (1 / 2) * ((l * (l + 1)) - (c * (c + 1)) + 2) / ((l * (l + 1)))
     # xas is (mu_p + mu_m)/2
@@ -590,8 +590,8 @@ def Sz(
     l    = s:0, p:1, d:2, f:3, final orbital
     nh   = number of holes
     tz   = magnetic dipole term
-    edge_div = if None, middle of spectrum, relative shift to calculated middle of spectrum based
-               on index number
+    edge_div = if None, middle of spectrum, relative shift to calculated
+               middle of spectrum based on index number
     """
     if edge_div is None:
         x_div = int(len(xmcd) / 2)
