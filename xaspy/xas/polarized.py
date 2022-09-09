@@ -371,7 +371,7 @@ class mHYST:
                 )
             plt.xlabel("magnetic field [arb. units]")
             plt.ylabel("absorption [arb. units]")
-            plt.legend("loop number")
+            plt.legend(title='loop nr.')
             plt.show()
         else:
             raise ValueError("please use onefigure=True/False")
@@ -405,6 +405,7 @@ class mHYST:
             return (np.array(field), np.array(averaged))
         else:
             raise ValueError("return_data mode not clear. use False or True")
+
 
 
 def HYST3en(df, fld, ene, det, mon, Epre, Eedg1, Eedg2):
