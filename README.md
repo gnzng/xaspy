@@ -8,7 +8,7 @@
 🚧🚧🚧 (always) under construction, developing parallel to my PhD journey 🚧🚧🚧
 
 
-This small python module want to help with X-ray absorption spectroscopy analysis and pre-evaluation during beam times. Similar software (mostly for EXAFS): [larch](https://github.com/xraypy/xraylarch). Strong focus on X-ray magnetic circular dichroism [XMCD](https://en.wikipedia.org/wiki/X-ray_magnetic_circular_dichroism).
+This small python module wants to help with X-ray absorption spectroscopy analysis and pre-evaluation during beam times. Similar software and strongly inspired by (but mostly for EXAFS): [larch](https://github.com/xraypy/xraylarch). Strong focus on X-ray magnetic circular dichroism [XMCD](https://en.wikipedia.org/wiki/X-ray_magnetic_circular_dichroism).
 
 # toc of readme
 
@@ -21,7 +21,7 @@ This small python module want to help with X-ray absorption spectroscopy analysi
 
 # 💻 installation
 
-xaspy can be installed from shell via PyPi or downloaded here from github as the source code.
+xaspy can be installed via PyPi or downloaded here from github as the source code.
 
 The necessary requirements can be found in requirement.txt file. Install via pip:
 
@@ -50,7 +50,6 @@ The function XMCD merges and interpolates the spectra for same spin angular mome
 For multiple hysteresis curves in one file use class `mHYST` with included functions. Use `plot_separated()` to plot multiple hysteresis loops separated. Function `average_loops()` takes the loop numbers and averages them.
 
 ## backgrounds
-
 the `xaspy.xas.backgrounds` module provides multiple possible backgrounds to correct the measured data.
 
 # ⬇️ import data
@@ -75,9 +74,9 @@ I would recommend using the following saving procedures:
 | filename.mos.rtf | fitting information important for Pi |
 | filename.dat     | exported ascii data table            |
 
-## read in function for theoretical calculations
+##  import of theoretical calculations
 
-read in functions for output files for programs like FEFF, multiX, xraylarch, quanty ...
+Reading functions for output files for programs like FEFF, multiX, xraylarch, quanty ...
 
 # despiking of data
 
@@ -116,6 +115,7 @@ rd(nr, raw=True)
 - [ ] improve telegram bot
 - [ ] continous integration and testing
 - [ ] Total Electron Yield measurement correction
+- [ ] Luminescence 2nd order correction
 - [ ] improve fast despiking
 - [ ] fit convolution and energy shift between theoretic and measured spectrum
 - [ ] working with .rtf-files for Mössbauer spectra from Pi
