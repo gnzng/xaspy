@@ -4,8 +4,7 @@
 #
 # small python program to split a larger SPEC file into individual files
 #
-# folder for individual files has to be named: scan_SPECFILENAME and must be in
-# the same directory
+# new empty folder for individual scans has to be created in the same directory. eg. scans_individual
 #
 # splitted files are .dat files
 # contain first line scan number and command
@@ -14,7 +13,14 @@
 
 import re
 
+
+# input parameters:
 file = input("Enter Filename:")
+output_folder = input('write scans to folder (folder has to already exist):')
+# end input parameters
+
+# split to remove extension from filename
+filename = file.split('.')[0]
 
 
 def split(file):
@@ -44,11 +50,11 @@ def split(file):
         if "#S" in i:
             nr = i.split(" ")[1]
             f = open(
-                "scans_" + file + "/" + file + "_{0:03}.dat".format(int(nr)),
+                output_folder + "/" + filename + "_{0:03}.dat".format(int(nr)),
                 "w+",
             )
         f = open(
-            "scans_" + file + "/" + file + "_{0:03}.dat".format(int(nr)), "a"
+            output_folder + "/" + filename + "_{0:03}.dat".format(int(nr)), "a"
         )
         if i != "splitsignal":
             f.write(i + "\n")
