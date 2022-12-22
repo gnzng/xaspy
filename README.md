@@ -37,8 +37,6 @@ pip install xaspy -U
 
 # 🤖 telegram bot
 
-hosting currently offline :(
-
 As a small side project I coded a small telegram bot (see folder bot_src). The telegram bot can be added via link to you contacts: [t.me/xaspy_bot](https://t.me/xaspy_bot) or writing to @xaspy_bot. The first implementation is returning the X-ray absorption edges for your specific elements. The backend is provided by [XrayDB](https://github.com/xraypy/XrayDB).
 
 # 🔬 XAS
