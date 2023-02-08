@@ -97,7 +97,7 @@ def XMCD(
                 t3pdat.append(
                     interpolate.interp1d(v1, v2)(xx + float(eshift) / 1000)
                 )
-            except:
+            except Exception:
                 raise ValueError(
                     'error at plus helicity; check interpolation range ' +
                     'eshift to large for interpolation range? ' +
@@ -120,7 +120,7 @@ def XMCD(
         else:
             try:
                 t3mdat.append(interpolate.interp1d(v1, v2)(xx))
-            except:
+            except Exception:
                 raise ValueError(
                     "error at minus helicity;", "check interpolation range."
                 )
@@ -193,7 +193,7 @@ def XMCD(
         elif norm in ["None", None]:
             norm_factor = 1.0
 
-    except:
+    except Exception:
         raise ValueError("normalization not clear, use {}".format(norm_opt))
 
     xas = np.array(xas) / norm_factor
@@ -291,7 +291,7 @@ class mHYST:
             t2, t3 = t1[t1[ene] >= ene_cut], t1[t1[ene] <= ene_cut]
             t2 = t2.reset_index()
             t3 = t3.reset_index()
-        except:
+        except Exception:
             raise ValueError("energy cut off failed")
 
         try:
@@ -305,7 +305,7 @@ class mHYST:
             else:
                 t2["normlzd"] = t2[det] / t2[mon]
                 t3["normlzd"] = t3[det] / t3[mon]
-        except:
+        except Exception:
             raise ValueError("normalization failed")
 
         # now use t2 to continue algortithm
@@ -314,7 +314,7 @@ class mHYST:
                 t2["divided"] = t2["normlzd"] / t3["normlzd"]
             elif ratio == "lower/higher":
                 t2["divided"] = t3["normlzd"] / t2["normlzd"]
-        except:
+        except Exception:
             raise ValueError("please choose a valid ratio")
 
         try:
@@ -323,7 +323,7 @@ class mHYST:
             self.slope_ct = self.slope_count(t2, fld).astype(int)
             self.len_per_loop = (len_t2 / self.slope_ct).astype(int)
 
-        except:
+        except Exception:
             raise ValueError(
                 "Could not build Hysteresis loop. Different number of scans? "
             )
@@ -405,7 +405,6 @@ class mHYST:
             return (np.array(field), np.array(averaged))
         else:
             raise ValueError("return_data mode not clear. use False or True")
-
 
 
 def HYST3en(df, fld, ene, det, mon, Epre, Eedg1, Eedg2):
@@ -493,7 +492,7 @@ def orbital_to_spin_ratio(
     --------
 
     orbital to spin ratio attached to group if group was provided
- 
+
     if no group was provided prints orbital to spin ratio
 
     Notes

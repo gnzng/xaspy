@@ -60,7 +60,7 @@ class SigScan:
                 indexed = pickle.load(open("_SS_index.p", "rb"))
                 file_to_open = indexed[string]
 
-            except:
+            except Exception:
                 raise ValueError(
                     "could not find Single Scan "
                     + string
@@ -70,11 +70,11 @@ class SigScan:
                 ct_lines = count_lines(file_to_open)
                 self.df = ct_lines[0]
                 self.header = ct_lines[1]
-            except:
+            except Exception:
                 raise ValueError("error while reading or finding file")
             try:
                 self.scantype = guess_scan(self.df)
-            except:
+            except Exception:
                 self.scantype = "could not indentify scan type"
 
         ###
@@ -92,7 +92,7 @@ class SigScan:
                             self.header = ct_lines[1]
                             try:
                                 self.scantype = guess_scan(self.df)
-                            except:
+                            except Exception:
                                 self.scantype = "could not indentify scan type"
 
 
@@ -107,7 +107,7 @@ class TrajScan:
                 indexed = pickle.load(open("_TS_index.p", "rb"))
                 file_to_open = indexed[string]
 
-            except:
+            except Exception:
                 raise ValueError(
                     "could not find Trajectory Scan "
                     + string
@@ -117,11 +117,11 @@ class TrajScan:
                 ct_lines = count_lines(file_to_open)
                 self.df = ct_lines[0]
                 self.header = ct_lines[1]
-            except:
+            except Exception:
                 raise ValueError("error while reading or finding file")
             try:
                 self.scantype = guess_scan(self.df)
-            except:
+            except Exception:
                 self.scantype = "could not indentify scan type"
 
         ###
@@ -139,7 +139,7 @@ class TrajScan:
                             self.header = ct_lines[1]
                             try:
                                 self.scantype = guess_scan(self.df)
-                            except:
+                            except Exception:
                                 self.scantype = "could not indentify scan type"
 
 
@@ -156,14 +156,14 @@ def guess_scan(df: pd.DataFrame, check: bool = False) -> str:
     len_magfield = len(np.unique(np.around(df["Magnet Field"], 3)))
     try:
         len_energy = len(np.unique(np.around(df["Energy"], 1)))
-    except:
+    except Exception:
         len_energy = 1
     len_x = len(np.unique(np.around(df["X"], 2)))
     len_y = len(np.unique(np.around(df["Y"], 2)))
     len_z = len(np.unique(np.around(df["Z"], 2)))
     len_theta = len(np.unique(np.around(df["Theta"], 2)))
 
-    if check == True:
+    if check is True:
         print("magnetic field points: {}".format(len_magfield))
         print("energy points: {}".format(len_energy))
         print("xmotor points: {}".format(len_x))
@@ -183,13 +183,12 @@ def guess_scan(df: pd.DataFrame, check: bool = False) -> str:
     return answers[most_changed]
 
 
-## checks if imported pd.DataFrame object is a Hysteresis loop measurement
-##
+# checks if imported pd.DataFrame object is a Hysteresis loop measurement
 def ishyst(df, check=False):
     len_magfield = len(np.unique(np.around(df["Magnet Field"], 3)))
     len_energy = len(np.unique(np.around(df["Energy"], 1)))
 
-    if check == True:
+    if check is True:
         print(
             "magnetic field points: {}, energy points: {}".format(
                 len_magfield, len_energy
@@ -200,7 +199,7 @@ def ishyst(df, check=False):
             return True
         elif len_magfield < len_energy:
             return False
-    except:
+    except Exception:
         raise ValueError("unknown Scan")
 
 

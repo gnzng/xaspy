@@ -128,3 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 xas/.DS_Store
+
+.vscode/

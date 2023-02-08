@@ -1,9 +1,7 @@
 import os
-from bl631 import TrajScan, SigScan
-
+from bl631 import TrajScan
 from bl631 import HYST_scanpair, XMCD_scanpair
 
-import pytest
 
 path_to_current_file = os.path.realpath(__file__)
 current_directory = os.path.split(path_to_current_file)[0]
