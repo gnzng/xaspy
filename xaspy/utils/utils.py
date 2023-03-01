@@ -113,3 +113,24 @@ def showspeccom(a):
             if "#S" in line:
                 clst.append(line.replace("\n", ""))
     return clst
+
+
+def center(a: float, b: float) -> int:
+    """
+    get position a and b, returns center between them
+
+    Arguments
+    ---------
+        a   = number, can be float, should be index-like
+        b   = number, can be float, should be index-like
+
+    Returns
+    --------
+        c   = center between a and b as int
+
+    Notes
+    --------
+    no notes
+    """
+    c = int((b - a)/2) + a
+    return c
