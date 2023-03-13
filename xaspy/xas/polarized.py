@@ -19,6 +19,7 @@ def XMCD(
     xsize=10000,
     norm="edge_jump",
     eshift=0,
+    alpha=0
 ) -> tuple:
     """
     xray magnetic circular dichroism function
@@ -41,6 +42,8 @@ def XMCD(
         norm    = choose normalization from ['white_line', 'edge_jump',
                   'pre_edge','None']
         eshift  = shift in energy, added to pdat values, default 0
+        alpha   = correction factor as suggested by https://doi.org/10.1107/S1600577520009972
+                  C. Piamonteze et al. 2020
 
     Returns
     --------
@@ -85,9 +88,9 @@ def XMCD(
             v21 = np.array(t2pdat[n][det])
             v22 = np.array(t2pdat[n][mon])
             if log is True:
-                v2 = np.log(v22 / v21)
+                v2 = np.log(v22 / v21 - alpha/2)
             else:
-                v2 = v21 / v22
+                v2 = v21 / v22 - alpha/2
         if mon is False:
             v2 = np.array(t2pdat[n][det])
         if xsize is None:
@@ -110,9 +113,9 @@ def XMCD(
             v21 = np.array(t2mdat[n][det])
             v22 = np.array(t2mdat[n][mon])
             if log is True:
-                v2 = np.log(v22 / v21)
+                v2 = np.log(v22 / v21 - alpha/2)
             else:
-                v2 = v21 / v22
+                v2 = v21 / v22 - alpha/2
         if mon is False:
             v2 = np.array(t2mdat[n][det])
         if xsize is None:
