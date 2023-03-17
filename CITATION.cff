@@ -1,0 +1,26 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: xaspy
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Damian
+    family-names: Günzing
+    email: damian@guenzing.de
+    affiliation: Universität Duisburg-Essen
+    orcid: 'https://orcid.org/0000-0002-4350-5098'
+repository-code: 'https://github.com/gnzng/xaspy'
+abstract: >-
+  This small python module wants to help with X-ray
+  absorption spectroscopy analysis and pre-evaluation during
+  beam times. Similar software and strongly inspired by (but
+  mostly for EXAFS): larch. Strong focus on X-ray magnetic
+  circular dichroism XMCD.
+keywords:
+  - XMCD
+  - spectroscopy
+  - data evaluation
