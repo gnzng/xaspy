@@ -1,6 +1,6 @@
 import os
 from distutils.core import setup
-__authors__  = 'Damian Guenzing \nAlpha T. N\'Diaye'
+__authors__ = 'Damian Guenzing  \n Alpha T. N\'Diaye'
 
 
 _version__ = None
@@ -14,20 +14,20 @@ with open(os.path.join('xaspy', '_version.py'), 'r') as version_file:
 
 
 setup(
-  name = 'xaspy',         # How you named your package folder (MyLib)
-  packages = ['xaspy',
-              'xaspy.utils',
-              'xaspy.xas',
-              'xaspy.readin',
-              'xaspy.beamlines',], 
-  version = __version__,      
+  name='xaspy',
+  packages=['xaspy',
+            'xaspy.utils',
+            'xaspy.xas',
+            'xaspy.readin',
+            'xaspy.beamlines'],
+  version=__version__,
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
-  description = 'package for analysis of experimental xray absorption spectroscopy data',   # Give a short description about your library
-  author = __authors__,                     # Type in your name
-  author_email = 'gnzng@protonmail.ch',      # Type in your E-Mail
-  url = 'https://github.com/gnzng/xaspy',   # Provide either the link to your github or to your website
-  keywords = ['xray absorption spectroscopy', 'xmcd', 'synchrotron'],   
-  install_requires=[ 
+  description='package for analysis of experimental xray absorption spectroscopy data',
+  author=__authors__,
+  author_email='hi@gnzng.me',
+  url='https://github.com/gnzng/xaspy',
+  keywords=['xray absorption spectroscopy', 'xmcd', 'synchrotron'],
+  install_requires=[
           'numpy',
           'pandas',
           'scipy',
