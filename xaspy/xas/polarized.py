@@ -226,18 +226,15 @@ def XMCD(
 class mHYST:
     """
     --- class was significantly changed with update 0.3.0 ---
-
     Arguments
     ---------
-
         df      = pandas dataframe of multiple Hyst loops
-        fld   = field column name of pandas object df
+        fld     = field column name of pandas object df
         ene     = energy column name of pandas object df
         det     = detector column name of pandas object
         mon     = monitor column -> if no monitor wanted, put 'False'
         ratio   = either divide higher/lower or lower/higher energy
         log     = neg. logarithm for tranmission experiments, default False
-
     Returns
     --------
     Nothing, but contains multiple functions:
@@ -245,15 +242,20 @@ class mHYST:
         - plot_separated(onefigure=False), plots all loops separated,
           if onefigure=True,
           it will plot every loop in one figure
-
     Notes
     --------
     no notes
-
     """
 
     def __init__(
-        self, df, fld, ene, det, mon, ratio="higher/lower", log=False
+        self,
+        df,
+        fld,
+        ene,
+        det,
+        mon,
+        ratio="higher/lower",
+        log=False
     ):
         import pandas as pd
 
@@ -284,9 +286,16 @@ class mHYST:
         self.fld = fld
 
         # find energy for cutoff:
+
+        min_ene = np.around(np.min(df[ene]), 2)
+        max_ene = np.around(np.max(df[ene]), 2)
         ene_cut = np.around(
-            (np.max(df[ene]) - np.min(df[ene])) / 2 + np.min(df[ene]), 2
+            (max_ene - min_ene) / 2 + min_ene, 2
         )
+
+        # save in class:
+        self.min_ene = min_ene
+        self.max_ene = max_ene
 
         try:
             # t2 at higher energy -> usually l2 edge, l3 at lower energies:
