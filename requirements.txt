@@ -19,7 +19,7 @@ numpy>=2.2.3
 packaging==21.3
 pandas>=2.2.3
 Pillow>=10.3.0
-pluggy==1.0.0
+pluggy>=1.5.0
 py==1.11.0
 pycodestyle==2.9.1
 pyflakes==2.5.0
