@@ -1,7 +1,7 @@
 # 🔬 xaspy - framework for X-ray absorption spectroscopy
 
 ![Downloads PyPi (branch)](https://img.shields.io/pypi/dm/xaspy?style=flat-square)
-![Python 3.8](https://img.shields.io/badge/python-3.8+-blue.svg?style=flat-square)
+![Python 3.10](https://img.shields.io/badge/python-3.10+-blue.svg?style=flat-square)
 [![DOI](https://zenodo.org/badge/305952446.svg)](https://zenodo.org/badge/latestdoi/305952446)
 
 
