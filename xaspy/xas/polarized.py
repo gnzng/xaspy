@@ -409,7 +409,7 @@ class mHYST:
 
         if return_data is False:
             plt.figure()
-            plt.title(f"average loops {*av_list,}")
+            plt.title(f"average loops {*av_list, }")
             plt.plot(field, averaged)
             plt.show()
 

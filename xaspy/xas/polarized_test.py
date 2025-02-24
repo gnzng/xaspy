@@ -1,6 +1,5 @@
 import unittest
 
-import pickle
 import numpy as np
 import pandas as pd
 import pytest
@@ -19,9 +18,11 @@ from xas import group
 path_to_current_file = os.path.realpath(__file__)
 current_directory = os.path.split(path_to_current_file)[0]
 path_to_file = os.path.join(
-    current_directory, "../test_files/pd_dataframe_hyst_example1.pickle"
+    current_directory, "../test_files/pd_dataframe_hyst_example1.csv"
 )
-df = pickle.load(open(path_to_file, "rb"))
+
+# Read the DataFrame from the CSV file
+df = pd.read_csv(path_to_file)
 
 
 def test_import_df():
@@ -62,8 +63,12 @@ testgroup = group()
 
 path_to_current_file = os.path.realpath(__file__)
 current_directory = os.path.split(path_to_current_file)[0]
-path_to_file = os.path.join(current_directory, "../test_files/xmcd_co.pickle")
-testgroup.xmcd = pickle.load(open(path_to_file, "rb"))
+
+
+xmcd_csv_path = os.path.join(current_directory, "../test_files/xmcd_co.csv")
+
+# Read the xmcd data from the CSV file
+testgroup.xmcd = pd.read_csv(xmcd_csv_path).to_dict(orient='list')["0"]
 
 testxmcd = testgroup.xmcd
 
