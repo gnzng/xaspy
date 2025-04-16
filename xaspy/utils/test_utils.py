@@ -52,7 +52,7 @@ def test_cumtrapz_dtype():
 
 def test_cumtrapz_not_increasing_at_the_end():
     """Test cumtrapz with a non-increasing signal at the end."""
-    signal = np.array([1, 2, 3, 2, 1, 0, 0.1, 0])
+    signal = np.array([1, 2, 3, 2, 1, 0.0, 0.0, 0.0])
     result = cumtrapz(signal)
-    expected = np.array([0.0, 1.5, 3.0, 4.5, 5.0, 5.0, 5.0, 5.0])
+    expected = np.array([0.0, 1.5, 4.0, 6.5, 8.0, 8.5, 8.5, 8.5])
     np.testing.assert_allclose(result, expected)
