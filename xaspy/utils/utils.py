@@ -132,5 +132,39 @@ def center(a: float, b: float) -> int:
     --------
     no notes
     """
-    c = int((b - a)/2) + a
+    c = int((b - a) / 2) + a
     return c
+
+
+def cumtrapz(signal: np.ndarray, energy: np.ndarray = None):
+    """
+    Calculates the cumulative trapezoidal integration of y with respect to x.
+
+    Args:
+        signal: The y-values to integrate.
+        energy: (Optional) The x-values. If None, it defaults to range(len(y)).
+
+    Returns:
+        A NumPy array containing the cumulative trapezoidal integration.
+    """
+
+    if not isinstance(signal, np.ndarray):
+        raise ValueError("signal must be a numpy array")
+    if signal.ndim != 1:
+        raise ValueError("signal must be a 1D array")
+    if len(signal) == 0:
+        raise ValueError("signal cannot be empty")
+
+    if energy is None:
+        energy = np.arange(len(signal))
+
+    cumulative_integral = np.zeros_like(signal, dtype=float)
+    cumulative_integral[0] = 0.0
+
+    for i in range(1, len(signal)):
+        # Add just the trapezoid between the previous and current point
+        cumulative_integral[i] = cumulative_integral[i - 1] + (
+            (signal[i] + signal[i - 1]) * (energy[i] - energy[i - 1]) / 2
+        )
+
+    return cumulative_integral

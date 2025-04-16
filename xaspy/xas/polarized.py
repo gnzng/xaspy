@@ -19,7 +19,7 @@ def XMCD(
     xsize=10000,
     norm="edge_jump",
     eshift=0,
-    alpha=0
+    alpha=0,
 ) -> tuple:
     """
     xray magnetic circular dichroism function
@@ -88,23 +88,21 @@ def XMCD(
             v21 = np.array(t2pdat[n][det])
             v22 = np.array(t2pdat[n][mon])
             if log is True:
-                v2 = np.log(v22 / v21 - alpha/2)
+                v2 = np.log(v22 / v21 - alpha / 2)
             else:
-                v2 = v21 / v22 - alpha/2
+                v2 = v21 / v22 - alpha / 2
         if mon is False:
             v2 = np.array(t2pdat[n][det])
         if xsize is None:
             t3pdat.append(v2)
         else:
             try:
-                t3pdat.append(
-                    interpolate.interp1d(v1, v2)(xx + float(eshift) / 1000)
-                )
+                t3pdat.append(interpolate.interp1d(v1, v2)(xx + float(eshift) / 1000))
             except Exception:
                 raise ValueError(
-                    'error at plus helicity; check interpolation range ' +
-                    'eshift to large for interpolation range? ' +
-                    'max Eshift ca. 100meV.'
+                    "error at plus helicity; check interpolation range "
+                    + "eshift to large for interpolation range? "
+                    + "max Eshift ca. 100meV."
                 )
     t3mdat = []
     for n in range(len(t2mdat)):
@@ -113,9 +111,9 @@ def XMCD(
             v21 = np.array(t2mdat[n][det])
             v22 = np.array(t2mdat[n][mon])
             if log is True:
-                v2 = np.log(v22 / v21 - alpha/2)
+                v2 = np.log(v22 / v21 - alpha / 2)
             else:
-                v2 = v21 / v22 - alpha/2
+                v2 = v21 / v22 - alpha / 2
         if mon is False:
             v2 = np.array(t2mdat[n][det])
         if xsize is None:
@@ -132,14 +130,12 @@ def XMCD(
     t4pdat = []  # all from +hel merged
     for k in range(0, len(xx)):
         t4pdat.append(
-            np.sum([t3pdat[s][k] for s in range(len(t3pdat))])
-            / int(len(t3pdat))
+            np.sum([t3pdat[s][k] for s in range(len(t3pdat))]) / int(len(t3pdat))
         )
     t4mdat = []  # all from -hel merged
     for k in range(0, len(xx)):
         t4mdat.append(
-            np.sum([t3mdat[s][k] for s in range(len(t3mdat))])
-            / int(len(t3mdat))
+            np.sum([t3mdat[s][k] for s in range(len(t3mdat))]) / int(len(t3mdat))
         )
     t5pdat = np.array(t4pdat)
     t5mdat = np.array(t4mdat)
@@ -151,8 +147,8 @@ def XMCD(
     )
     corrpost = np.poly1d(
         np.polyfit(
-            xx[int(len(xx) - len(xx) * 0.1):],
-            pdm[int(len(xx) - len(xx) * 0.1):],
+            xx[int(len(xx) - len(xx) * 0.1) :],
+            pdm[int(len(xx) - len(xx) * 0.1) :],
             1,
         )
     )
@@ -247,16 +243,7 @@ class mHYST:
     no notes
     """
 
-    def __init__(
-        self,
-        df,
-        fld,
-        ene,
-        det,
-        mon,
-        ratio="higher/lower",
-        log=False
-    ):
+    def __init__(self, df, fld, ene, det, mon, ratio="higher/lower", log=False):
         import pandas as pd
 
         header = list(df)
@@ -289,9 +276,7 @@ class mHYST:
 
         min_ene = np.around(np.min(df[ene]), 2)
         max_ene = np.around(np.max(df[ene]), 2)
-        ene_cut = np.around(
-            (max_ene - min_ene) / 2 + min_ene, 2
-        )
+        ene_cut = np.around((max_ene - min_ene) / 2 + min_ene, 2)
 
         # save in class:
         self.min_ene = min_ene
@@ -360,10 +345,10 @@ class mHYST:
                 plt.title("loop {}".format(n))
                 plt.plot(
                     self.t2[self.fld][
-                        n * self.len_per_loop:(n + 1) * self.len_per_loop
+                        n * self.len_per_loop : (n + 1) * self.len_per_loop
                     ],
                     self.t2["divided"][
-                        n * self.len_per_loop:(n + 1) * self.len_per_loop
+                        n * self.len_per_loop : (n + 1) * self.len_per_loop
                     ],
                 )
                 plt.xlabel("magnetic field [arb. units]")
@@ -374,22 +359,21 @@ class mHYST:
             for n in range(self.slope_ct):
                 plt.plot(
                     self.t2[self.fld][
-                        n * self.len_per_loop:(n + 1) * self.len_per_loop
+                        n * self.len_per_loop : (n + 1) * self.len_per_loop
                     ],
                     self.t2["divided"][
-                        n * self.len_per_loop:(n + 1) * self.len_per_loop
+                        n * self.len_per_loop : (n + 1) * self.len_per_loop
                     ],
                     label="{}".format(n),
                 )
             plt.xlabel("magnetic field [arb. units]")
             plt.ylabel("absorption [arb. units]")
-            plt.legend(title='loop nr.')
+            plt.legend(title="loop nr.")
             plt.show()
         else:
             raise ValueError("please use onefigure=True/False")
 
     def average_loops(self, av_list, return_data=False):
-
         """
         takes number of loops, check before with plot_seperated()
         set return_data to True to get data as tuple(field, signal)
@@ -399,9 +383,7 @@ class mHYST:
         toaverage = []
         for n in av_list:
             toaverage.append(
-                self.t2["divided"][
-                    n * self.len_per_loop:(n + 1) * self.len_per_loop
-                ]
+                self.t2["divided"][n * self.len_per_loop : (n + 1) * self.len_per_loop]
             )
         averaged = np.mean(toaverage, axis=0)
         self.std = np.std(toaverage, axis=0)
@@ -484,10 +466,7 @@ def LDS(xx, xmcd, px):
     return lds
 
 
-def orbital_to_spin_ratio(
-    xmcd=None, xp=None, xq=None, group=None, orbital="3d"
-):
-
+def orbital_to_spin_ratio(xmcd=None, xp=None, xq=None, group=None, orbital="3d"):
     """
     function for orbital to spin ratio from xmcd without <Tz> term
 
@@ -573,8 +552,7 @@ def Lz(
     factor = (1 / 2) * ((l * (l + 1)) - (c * (c + 1)) + 2) / ((l * (l + 1)))
     # xas is (mu_p + mu_m)/2
     lz = (nh / factor) * (
-        np.cumsum(xmcd)[-last_number_xmcd]
-        / (3 * np.cumsum(xas)[-last_number_xas])
+        np.cumsum(xmcd)[-last_number_xmcd] / (3 * np.cumsum(xas)[-last_number_xas])
     )
     return float(lz)
 
@@ -623,7 +601,92 @@ def Sz(
         - (((c + 1) / c) * np.cumsum(xmcd[x_div:])[-last_number_xmcd])
     ) / (3 * np.cumsum(xas)[-last_number_xas])
 
-    sz = (spec_part - tz_part) * (
-        (3 * c * nh) / ((l * (l + 1) - 2 - c * (c + 1)))
+    sz = (spec_part - tz_part) * ((3 * c * nh) / ((l * (l + 1) - 2 - c * (c + 1))))
+    return float(sz)
+
+
+def Lz_cumsum(
+    xmcd_cumsum: np.ndarray,
+    xas_cumsum: np.ndarray,
+    c: int = 1,
+    l: int = 2,
+    nh: float = 1.0,
+    tz=None,
+    last_number_xas=1,
+    last_number_xmcd=1,
+) -> float:
+    """
+    same as Lz, but using cumsum instead of calculating it in the function
+    sum rule taken from:
+        Carra, P., Thole, B. T., Altarelli, M., & Wang, X. (1993).
+        X-ray circular dichroism and local magnetic fields.
+        Phys Rev Lett, 70(5), 694-697.
+        doi:10.1103/PhysRevLett.70.694
+    xmcd_cumsum = numpy array of XMCD as in mu_p - mu_m
+    xas_cumsum  = numpy array of step function corrected XAS as in (mu_p + mu_m)/2
+    c    = s:0, p:1, d:2, f:3, initial orbital
+    l    = s:0, p:1, d:2, f:3, final orbital
+    nh   = number of holes
+    tz   = can be provided, but will not be used for calculating orbital
+           moment
+    """
+    tz = tz
+
+    factor = (1 / 2) * ((l * (l + 1)) - (c * (c + 1)) + 2) / ((l * (l + 1)))
+    # xas is (mu_p + mu_m)/2
+    lz = (nh / factor) * (
+        xmcd_cumsum[-last_number_xmcd] / (3 * xas_cumsum[-last_number_xas])
     )
+    return float(lz)
+
+
+def Sz_cumsum(
+    xmcd_cumsum: np.ndarray,
+    xas_cumsum: np.ndarray,
+    c: int = 1,
+    l: int = 2,
+    nh: float = 1.0,
+    tz: float = 0.0,
+    edge_div=None,
+    last_number_xas=1,
+    last_number_xmcd=1,
+) -> float:
+    """
+    same as Sz, but using cumsum instead of calculating it in the function
+    sum rule taken from:
+        Carra, P., Thole, B. T., Altarelli, M., & Wang, X. (1993).
+        X-ray circular dichroism and local magnetic fields.
+        Phys Rev Lett, 70(5), 694-697.
+        doi:10.1103/PhysRevLett.70.694
+    xmcd_cumsum = numpy array of XMCD as in mu_p - mu_m
+    xas_cumsum  = numpy array of step function corrected XAS as in (mu_p + mu_m)/2
+    c    = s:0, p:1, d:2, f:3, initial orbital
+    l    = s:0, p:1, d:2, f:3, final orbital
+    nh   = number of holes
+    tz   = magnetic dipole term
+    edge_div = if None, middle of spectrum, relative shift to calculated
+               middle of spectrum based on index number
+    """
+    if edge_div is None:
+        x_div = int(len(xmcd_cumsum) / 2)
+    else:
+        x_div = int(len(xmcd_cumsum) / 2) + edge_div
+
+    tz_part = (
+        (
+            l * (l + 1) * (l * (l + 1) + 2 * c * (c + 1) + 4)
+            - ((3 * (c - 1) ** 2) * (c + 2) ** 2)
+        )
+        / (6 * l * c * (l + 1) * nh)
+    ) * tz
+
+    spec_part = (
+        xmcd_cumsum[:x_div][-1]
+        - (
+            ((c + 1) / c)
+            * ((xmcd_cumsum[x_div:] - xmcd_cumsum[x_div])[-last_number_xmcd])
+        )
+    ) / (3 * xas_cumsum[-last_number_xas])
+
+    sz = (spec_part - tz_part) * ((3 * c * nh) / ((l * (l + 1) - 2 - c * (c + 1))))
     return float(sz)
