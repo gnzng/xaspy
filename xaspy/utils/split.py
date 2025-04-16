@@ -16,11 +16,11 @@ import re
 
 # input parameters:
 file = input("Enter Filename:")
-output_folder = input('write scans to folder (folder has to already exist):')
+output_folder = input("write scans to folder (folder has to already exist):")
 # end input parameters
 
 # split to remove extension from filename
-filename = file.split('.')[0]
+filename = file.split(".")[0]
 
 
 def split(file):
@@ -53,9 +53,7 @@ def split(file):
                 output_folder + "/" + filename + "_{0:03}.dat".format(int(nr)),
                 "w+",
             )
-        f = open(
-            output_folder + "/" + filename + "_{0:03}.dat".format(int(nr)), "a"
-        )
+        f = open(output_folder + "/" + filename + "_{0:03}.dat".format(int(nr)), "a")
         if i != "splitsignal":
             f.write(i + "\n")
         if n != 0:

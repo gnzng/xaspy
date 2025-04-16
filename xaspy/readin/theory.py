@@ -3,9 +3,8 @@ import pandas as pd
 
 #####
 
-####readin functions for different theory/simulation programs:
 
-
+# readin functions for different theory/simulation programs:
 def multix(a):
     """
     import multiX output file

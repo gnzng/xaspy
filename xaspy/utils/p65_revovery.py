@@ -1,5 +1,4 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import json
 import numpy as np
 import os
@@ -67,7 +66,7 @@ np.array(data['MCA_2'])/np.array(data['I0']),
 np.array(data['MCA_3'])/np.array(data['I0'])],axis=0)
 
 class class_spec:
-    e = ene 
+    e = ene
     mu = merge
 
 #autobk(energy = class_spec.e,mu = class_spec.mu,group=class_spec,rbkg=1, kw=2)

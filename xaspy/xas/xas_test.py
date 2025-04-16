@@ -1,27 +1,25 @@
 from xas import group
-
-import unittest
-
 import numpy as np
-
-xmcd_141_ = group("test", lds=0.7)
-xmcd_141_.energy = np.linspace(0, 1, 5000)
-xmcd_141_.energy_interp = np.linspace(0, 1, 10000)
-xmcd_141_.plus_xas = np.array([1, 2, 3, 4, 5])
-xmcd_141_.minus_xas = np.array([1, 2, 3, 4, 5])
-
-assert xmcd_141_, "group should be existent"
-assert xmcd_141_.lds == 0.7, "should be 0.7"
-assert xmcd_141_.__name__ == "test", "name should be test"
+import pytest
 
 
-class Test(unittest.TestCase):
-    def test_1(self):
-        self.assertEqual(xmcd_141_.lds, 0.7, "should be 0.7")
+@pytest.fixture
+def xmcd_141():
+    xmcd = group("test", lds=0.7)
+    xmcd.energy = np.linspace(0, 1, 5000)
+    xmcd.energy_interp = np.linspace(0, 1, 10000)
+    xmcd.plus_xas = np.array([1, 2, 3, 4, 5])
+    xmcd.minus_xas = np.array([1, 2, 3, 4, 5])
+    return xmcd
 
-    def test_2(self):
-        self.assertEqual(xmcd_141_.__name__, "test", "name should be test")
+
+def test_group_existence(xmcd_141):
+    assert xmcd_141 is not None, "group should be existent"
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_lds_value(xmcd_141):
+    assert xmcd_141.lds == 0.7, "should be 0.7"
+
+
+def test_name(xmcd_141):
+    assert xmcd_141.__name__ == "test", "name should be test"

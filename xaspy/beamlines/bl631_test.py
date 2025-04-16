@@ -1,4 +1,5 @@
 import os
+import pytest
 from bl631 import TrajScan
 from bl631 import HYST_scanpair, XMCD_scanpair
 
@@ -22,7 +23,10 @@ def test_scn_maker():
 
 
 def test_warnings():
-    #
-    # test if errors are right
-    assert XMCD_scanpair(1.9, [735, 734])
-    assert XMCD_scanpair(1.9, [735, 735])
+    # Test if warnings are raised for incorrect edge energy ordering
+    with pytest.warns(UserWarning, match="Scan is running backwards in energy."):
+        XMCD_scanpair(1.9, [735, 734])
+
+    # Test if warnings are raised for duplicate edge energies
+    with pytest.warns(UserWarning, match="Same point for start and stop energy."):
+        XMCD_scanpair(1.9, [735, 735])

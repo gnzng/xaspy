@@ -1,4 +1,4 @@
-#### OLD namespace -> moved to beamlines
+# OLD namespace -> moved to beamlines
 
 
 def raise_error():
@@ -20,7 +20,7 @@ def TS_indexing():
 
 
 class SigScan:
-    ### "bl_comp" working at beam line computer with access to all scans
+    # "bl_comp" working at beam line computer with access to all scans
     path = "bl_comp"
     # import using the beam line computer
 
@@ -29,7 +29,7 @@ class SigScan:
 
 
 class TrajScan:
-    ### "bl_comp" working at beam line computer with access to all scans
+    # "bl_comp" working at beam line computer with access to all scans
     path = "bl_comp"
     # import using the beam line computer
 

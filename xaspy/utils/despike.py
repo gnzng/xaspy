@@ -1,10 +1,6 @@
 import pickle
 
-###########################
-###########################
-####DESPIKE Functions######
-###########################
-###########################
+
 def showspikes(file):
     """
     shows dictionary of spike values saved in file
@@ -27,7 +23,7 @@ def removespikes(a, file):
         del b[a]
         with open(file + ".spike", "wb") as f:
             pickle.dump(b, f, protocol=pickle.HIGHEST_PROTOCOL)
-    except:
+    except Exception:
         print("{} not in {}".format(a, file))
 
 
@@ -40,7 +36,7 @@ def addspike(a, c, file):
     try:
         with open(file + ".spike", "rb") as f:
             b = pickle.load(f)
-    except:
+    except Exception:
         with open(file + ".spike", "wb") as f:
             pickle.dump({}, f, protocol=pickle.HIGHEST_PROTOCOL)
         with open(file + ".spike", "rb") as f:
@@ -53,5 +49,5 @@ def addspike(a, c, file):
             b[a] = [c]
         with open(file + ".spike", "wb") as f:
             pickle.dump(b, f, protocol=pickle.HIGHEST_PROTOCOL)
-    except:
+    except Exception:
         print("oops, something went wrong")

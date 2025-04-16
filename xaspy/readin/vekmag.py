@@ -1,15 +1,10 @@
-# imports:
-import numpy as np
-from scipy import interpolate
-import matplotlib.pyplot as plt
 import pandas as pd
 import pickle
 
-#####
 
-####readin functions from different beamlines:
-##VEKMAG### BESSY2
-### define get header function from large, unsplit and file
+# readin functions from different beamlines:
+# VEKMAG### BESSY2
+# define get header function from large, unsplit and file
 def getheader(b, file):  # its written that b is scan number!
     r = open(file, "r")
     mylist = r.read().splitlines()
@@ -56,14 +51,14 @@ def readin(a, file, raw=False):
         names=getheader(a, file),
         comment="#",
     )
-    if raw == False:
+    if raw is False:
         try:
             with open(file + ".spike", "rb") as f:
                 b = pickle.load(f)
                 if a in b:
                     todrop = b[a]
                     dff = dff.drop(todrop)
-        except:
+        except Exception:
             pass
     else:
         pass
