@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from utils.utils import cumtrapz
+from utils import cumtrapz
 
 
 def test_cumtrapz_basic():
