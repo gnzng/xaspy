@@ -5,11 +5,11 @@ import os
 
 # imports from xaspy:
 
-from polarized import (
+from xaspy.xas.polarized import (
     orbital_to_spin_ratio,
     mHYST,
 )
-from xas import group
+from xaspy.xas.xas import group
 
 # HYST tests:
 

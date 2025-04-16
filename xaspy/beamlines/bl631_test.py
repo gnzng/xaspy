@@ -1,7 +1,7 @@
 import os
 import pytest
-from bl631 import TrajScan
-from bl631 import HYST_scanpair, XMCD_scanpair
+from xaspy.beamlines.bl631 import TrajScan
+from xaspy.beamlines.bl631 import HYST_scanpair, XMCD_scanpair
 
 
 path_to_current_file = os.path.realpath(__file__)

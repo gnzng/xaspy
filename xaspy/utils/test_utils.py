@@ -1,6 +1,6 @@
 import pytest
 import numpy as np
-from utils import cumtrapz
+from xaspy.utils.utils import cumtrapz
 
 
 def test_cumtrapz_basic():
