@@ -9,14 +9,10 @@ maintainers = [
   {name = "Damian Guenzing", email = "dguenzing@lbl.gov"}
 ]
 description = "Package for analysis of experimental xray absorption spectroscopy data"
-license = { text = "MIT" }
+license = "MIT"
 keywords = ["xray absorption spectroscopy", "xmcd", "synchrotron"]
 classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "Topic :: Software Development :: Build Tools",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.10",
+
 ]
 urls = { "Homepage" = "https://github.com/gnzng/xaspy" }
 dependencies = [
@@ -31,9 +27,4 @@ requires-python = ">=3.10"
 
 [optional-dependencies]
 dev = ["black", "flake8", "mypy"]
-
-[tool.setuptools]
-package-dir = {"" = ""}
-
-[tool.setuptools.package-data]
-"*" = ["*.*"]
+docs = ["sphinx", "sphinx_rtd_theme"]
