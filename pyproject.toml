@@ -5,6 +5,9 @@ authors = [
     { name = "Damian Guenzing" },
     { name = "Alpha T. N'Diaye" },
 ]
+maintainers = [
+  {name = "Damian Guenzing", email = "dguenzing@lbl.gov"}
+]
 description = "Package for analysis of experimental xray absorption spectroscopy data"
 license = { text = "MIT" }
 keywords = ["xray absorption spectroscopy", "xmcd", "synchrotron"]
@@ -28,3 +31,9 @@ requires-python = ">=3.10"
 
 [optional-dependencies]
 dev = ["black", "flake8", "mypy"]
+
+[tool.setuptools]
+package-dir = {"" = ""}
+
+[tool.setuptools.package-data]
+"*" = ["*.*"]
