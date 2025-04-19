@@ -27,6 +27,7 @@ setup(
         "pandas",
         "scipy",
         "matplotlib",
+        "pytest",
     ],
     classifiers=[
         "Development Status :: 4 - Beta",
