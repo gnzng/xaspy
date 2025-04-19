@@ -28,5 +28,24 @@ def test_name(xmcd_141):
 
 def test_step():
     x = np.linspace(0, 10, 100)
-    y = np.ones_like(x)
-    step(x, y, 5)
+    a = 1.0
+    tp = 5.0
+    slope = 2.0
+
+    # Test without slope
+    result_no_slope = step(a, tp, x)
+    assert result_no_slope is not None, "Result should not be None"
+    assert len(result_no_slope) == len(x), "Result length should match input length"
+
+    # Test with slope
+    result_with_slope = step(a, tp, x, slope=slope)
+    assert result_with_slope is not None, "Result should not be None"
+    assert len(result_with_slope) == len(x), "Result length should match input length"
+
+    # Test turning point outside range
+    with pytest.warns(Warning, match="Turning point \\(tp\\) is outside the range of the energy array."):
+        step(a, 15.0, x)
+
+    # Test invalid slope
+    with pytest.raises(ValueError, match="slope factor has to be float, e.g. 2.0, 2.3, etc."):
+        step(a, tp, x, slope="invalid")

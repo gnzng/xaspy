@@ -1,7 +1,6 @@
 # imports:
 import numpy as np
-
-#####
+import warnings
 
 
 def linprebkg(xx, xas, x1, x2):
@@ -42,7 +41,7 @@ def smooth(y, box_pts):
 
 
 # step function for branching ratio
-def step(a, tp, energy, slope=None):
+def step(a: float, tp: float, energy: np.ndarray, slope: float = None) -> np.ndarray:
     """
     takes:
     a      = step hight
@@ -54,6 +53,9 @@ def step(a, tp, energy, slope=None):
     returns:
     step function as a np.array
     """
+    if tp < np.min(energy) or tp > np.max(energy):
+        warnings.warn("Turning point (tp) is outside the range of the energy array.", Warning)
+
     if slope is None:
         return np.array(a * (1 / (1 + np.exp(tp - energy))))
 
