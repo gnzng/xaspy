@@ -6,7 +6,7 @@ from xaspy.beamlines.bl631 import HYST_scanpair, XMCD_scanpair
 
 path_to_current_file = os.path.realpath(__file__)
 current_directory = os.path.split(path_to_current_file)[0]
-path_to_file = os.path.join(current_directory, "../test_files")
+path_to_file = os.path.join(current_directory, "test_files")
 
 
 def test_imports():

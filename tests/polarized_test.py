@@ -16,7 +16,7 @@ from xaspy.xas.xas import group
 path_to_current_file = os.path.realpath(__file__)
 current_directory = os.path.split(path_to_current_file)[0]
 path_to_file = os.path.join(
-    current_directory, "../test_files/pd_dataframe_hyst_example1.csv"
+    current_directory, "test_files/pd_dataframe_hyst_example1.csv"
 )
 
 # Read the DataFrame from the CSV file
@@ -63,7 +63,7 @@ path_to_current_file = os.path.realpath(__file__)
 current_directory = os.path.split(path_to_current_file)[0]
 
 
-xmcd_csv_path = os.path.join(current_directory, "../test_files/xmcd_co.csv")
+xmcd_csv_path = os.path.join(current_directory, "test_files/xmcd_co.csv")
 
 # Read the xmcd data from the CSV file
 testgroup.xmcd = pd.read_csv(xmcd_csv_path).to_dict(orient="list")["0"]
