@@ -2,8 +2,6 @@ import pandas as pd
 import json
 import numpy as np
 import os
-
-# from larch.xafs import autobk
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -58,26 +56,3 @@ if os.stat(filename + ".xdi").st_size <= 20 * 1024:
         dfAsString = df.to_string(header=False, index=False)
         f.write(dfAsString)
     f.close()
-
-"""ene = np.array(data['E_enc'])
-merge = np.mean([np.array(data['MCA_0'])/np.array(data['I0']),
-np.array(data['MCA_1'])/np.array(data['I0']),
-np.array(data['MCA_2'])/np.array(data['I0']),
-np.array(data['MCA_3'])/np.array(data['I0'])],axis=0)
-
-class class_spec:
-    e = ene
-    mu = merge
-
-#autobk(energy = class_spec.e,mu = class_spec.mu,group=class_spec,rbkg=1, kw=2)
-
-plt.figure()
-plt.plot(ene,merge,linewidth=2)
-plt.show()
-
-
-#plt.figure()
-#plt.plot(class_spec.k,class_spec.chi*class_spec.k**2,linewidth=2)
-#plt.show()
-
-"""

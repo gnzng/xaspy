@@ -6,17 +6,17 @@ def raise_error():
 
 
 def count_lines(file):
-    return raise_error()
+    raise_error()
 
 
 def SS_indexing():
 
-    return raise_error()
+    raise_error()
 
 
 def TS_indexing():
 
-    return raise_error()
+    raise_error()
 
 
 class SigScan:
@@ -25,7 +25,7 @@ class SigScan:
     # import using the beam line computer
 
     def __init__(self, string: str):
-        return raise_error()
+        raise_error()
 
 
 class TrajScan:
@@ -34,4 +34,4 @@ class TrajScan:
     # import using the beam line computer
 
     def __init__(self, string: str):
-        return raise_error()
+        raise_error()

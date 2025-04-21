@@ -14,7 +14,7 @@ def count_lines(file):
     header = []
     f = open(file)
     ct = 0
-    for n in range(50):
+    for _ in range(50):
         line = str(f.readline())
         if line.startswith("Time of Day"):
             break
@@ -28,7 +28,7 @@ def count_lines(file):
 def SS_indexing():
     datapath = "Y:\\BCS Setup Data\\"
     SigScans_indexed = {}
-    for root, dirs, files in os.walk(datapath):
+    for root, _dirs, files in os.walk(datapath):
         for name in files:
             if name.startswith("SigScan"):
                 strng = name.replace(".txt", "")
@@ -40,7 +40,7 @@ def SS_indexing():
 def TS_indexing():
     datapath = "Y:\\BCS Setup Data\\"
     TrajScans_indexed = {}
-    for root, dirs, files in os.walk(datapath):
+    for root, _dirs, files in os.walk(datapath):
         for name in files:
             if name.startswith("TrajScan"):
                 strng = name.replace(".txt", "")
@@ -146,7 +146,6 @@ class TrajScan:
 # returns type of scan
 # this can be written more elegant
 def guess_scan(df: pd.DataFrame, check: bool = False) -> str:
-
     """
     guesses scan from pandas input base on number of unique scan values
 
@@ -297,7 +296,7 @@ def HYST_scanpair():
     """
     DUMMY for HYST scans
     """
-    pass
+    return None
 
 
 def make_scanfile(mesh_fields, outfilename):
