@@ -20,25 +20,23 @@ jobs:
       pages: write
     steps:
       - uses: actions/checkout@v3
-      - name: build
+      - name: Install uv
         run: |
-          sudo apt-get update
-          sudo apt-get install git -y
-          sudo apt install python3-pip -y
-          sudo apt install locales
-          sudo apt-get install graphviz -y
-          sudo apt install npm -y
-          sudo pip3 install sphinx
-          sudo pip3 install sphinx-js
-          sudo pip3 install sphinx_rtd_theme
-          sudo pip3 install breathe
-          sudo pip3 install linuxdoc
-          sudo npm install -g jsdoc
-          git fetch --tags
-          cd docs
-          mkdir _build
-          python3 build_docs.py
+          pip install uv
       
+      - name: Create virtual environment
+        run: |
+          uv venv
+      
+      - name: Install dependencies with uv
+        run: |
+          uv pip install ."[docs]"
+
+      - name: Build docs
+        run: |
+          uv run python -m sphinx -b html docs/ docs/_build/html
+          uv run python -m sphinx -b html docs/ docs/_build/html/v1
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
