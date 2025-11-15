@@ -8,7 +8,11 @@
         <dl>
             <dt>{{ _('Versions') }}</dt>
             {% for the_version, url in versions %}
-            <dd><a href="{{ url }}/index.html">{{ the_version }}</a></dd>
+            {% if url %}
+            <dd><a href="/{{ url }}/index.html">{{ the_version }}</a></dd>
+            {% else %}
+            <dd><a href="/index.html">{{ the_version }}</a></dd>
+            {% endif %}
             {% endfor %}
         </dl>
         {% endif %}
