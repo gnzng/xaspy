@@ -26,8 +26,6 @@ jobs:
           sudo apt-get install git -y
           sudo apt install python3-pip -y
           sudo apt install locales
-          sudo locale-gen en_US.UTF-8
-          sudo apt-get install doxygen -y
           sudo apt-get install graphviz -y
           sudo apt install npm -y
           sudo pip3 install sphinx
@@ -43,7 +41,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v4
         with:
           # Upload entire repository
           path: './pages'
