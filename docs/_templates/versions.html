@@ -7,12 +7,10 @@
         {% if versions|length >= 1 %}
         <dl>
             <dt>{{ _('Versions') }}</dt>
-            {% for the_version, url in versions %}
-            {% if url %}
-            <dd><a href="/xaspy/{{ url }}/index.html">{{ the_version }}</a></dd>
-            {% else %}
-            <dd><a href="/xaspy/index.html">{{ the_version }}</a></dd>
-            {% endif %}
+            <dd><a href="https://gnzng.github.io/xaspy/index.html">latest</a></dd>
+            <dd><a href="https://gnzng.github.io/xaspy/v0.3.0/index.html">v0.3.0</a></dd>
+            <dd><a href="https://gnzng.github.io/xaspy/v0.2.0/index.html">v0.2.0</a></dd>
+            <dd><a href="https://gnzng.github.io/xaspy/v0.1.0/index.html">v0.1.0</a></dd>
             {% endfor %}
         </dl>
         {% endif %}
