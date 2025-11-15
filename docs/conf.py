@@ -13,7 +13,10 @@ author = "Damian"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    "sphinx.ext.autosummary",
+    "sphinx.ext.autodoc",
+]
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
@@ -27,5 +30,8 @@ html_static_path = ["_static"]
 
 html_context = {
     "current_version": "latest",
-    "versions": [["latest", ""], ["v0.3.0", "v0.3.0"], ["v0.2.0", "v0.2.0"], ["v0.1.0", "v0.1.0"]],
+    "versions": [
+        ["latest", ""],
+        ["v0.3.9", "v0.3.9"],
+    ],
 }

@@ -36,9 +36,8 @@ jobs:
         run: |
           uv run python -m sphinx -b html docs/ docs/_build/html
           uv run python -m sphinx -b html docs/ docs/_build/html/main
-          uv run python -m sphinx -b html docs/ docs/_build/html/v0.1.0
-          uv run python -m sphinx -b html docs/ docs/_build/html/v0.2.0
-          uv run python -m sphinx -b html docs/ docs/_build/html/v0.3.0
+          git checkout v0.3.9
+          uv run python -m sphinx -b html docs/ docs/_build/html/v0.3.9
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
