@@ -7,7 +7,7 @@ def build_doc(version, tag):
     os.environ["current_version"] = version
     subprocess.run("git checkout " + tag, shell=True)
     subprocess.run("git checkout main -- conf.py", shell=True)
-    subprocess.run("git checkout main -- versions.yaml", shell=True)
+    subprocess.run("git checkout main -- versions.yml", shell=True)
     subprocess.run("make html", shell=True)
 
 
