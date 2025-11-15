@@ -20,7 +20,6 @@ os.environ["build_all_docs"] = str(True)
 os.environ["pages_root"] = "https://gnzng.github.io/xaspy/"
 
 build_doc("latest", "main")
-move_dir("./_build/html/", "../pages/")
 
 
 with open("versions.yml", "r") as yaml_file:
@@ -33,4 +32,4 @@ with open("versions.yml", "r") as yaml_file:
 for version, details in docs.items():
     tag = details.get("tag", "")
     build_doc(version, tag)
-    move_dir("./_build/html/", "../pages/" + version + "/")
+    # move_dir("./_build/html/", "../pages/" + version + "/")

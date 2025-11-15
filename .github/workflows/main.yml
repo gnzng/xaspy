@@ -42,9 +42,6 @@ jobs:
         uses: actions/configure-pages@v3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
-        with:
-          # Upload entire repository
-          path: './pages'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
