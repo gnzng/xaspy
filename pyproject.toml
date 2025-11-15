@@ -22,6 +22,12 @@ dependencies = [
     "matplotlib",
     "pytest",
 ]
+
+[project.optional-dependencies]
+docs = [
+  "sphinx",
+  "sphinx_rtd_theme"
+]
 readme = "README.md"
 requires-python = ">=3.10"
 
