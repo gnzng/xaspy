@@ -12,7 +12,6 @@ description = "Package for analysis of experimental xray absorption spectroscopy
 license = "MIT"
 keywords = ["xray absorption spectroscopy", "xmcd", "synchrotron"]
 classifiers = [
-
 ]
 urls = { "Homepage" = "https://github.com/gnzng/xaspy" }
 dependencies = [
@@ -22,14 +21,14 @@ dependencies = [
     "matplotlib",
     "pytest",
 ]
+readme = "README.md"
+requires-python = ">=3.10"
 
 [project.optional-dependencies]
 docs = [
   "sphinx",
   "sphinx_rtd_theme"
 ]
-readme = "README.md"
-requires-python = ">=3.10"
 
 [optional-dependencies]
 dev = ["black", "flake8", "mypy"]
