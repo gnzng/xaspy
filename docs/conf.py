@@ -27,11 +27,3 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
-
-html_context = {
-    "current_version": "latest",
-    "versions": [
-        ["latest", ""],
-        ["v0.3.10", "v0.3.10"],
-    ],
-}
