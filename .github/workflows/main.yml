@@ -38,8 +38,16 @@ jobs:
           uv run python -m sphinx -b html docs/ docs/_build/html
           git reset --hard
           git checkout v0.3.10
-          cp docs/_templates/versions.html docs/_build/html/v0.3.10/_templates/versions.html
-          sed -i "s/{{ latest_version }}/$latest_version/g" docs/_build/html/v0.3.10/_templates/versions.html
+          # Retrieve the latest versioning.html from the main branch into docs/_templates
+          git checkout main -- docs/_templates/versioning.html
+
+          cp docs/_templates/versioning.html /tmp/versioning.html
+
+          git reset --hard
+          git checkout v0.3.10
+
+          mv /tmp/versioning.html docs/_templates/versioning.html
+
           uv run python -m sphinx -b html docs/ docs/_build/html/v0.3.10
 
       - name: Upload artifact
