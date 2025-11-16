@@ -32,5 +32,6 @@ html_context = {
     "current_version": "latest",
     "versions": [
         ["latest", ""],
+        ["v0.3.10", "v0.3.10"],
     ],
 }
