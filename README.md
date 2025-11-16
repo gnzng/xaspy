@@ -111,6 +111,11 @@ Alternatively you can also load the raw or spiked data with:
 rd(nr, raw=True)
 ```
 
+# Older Documentation
+
+- [v0.3.10](https://gnzng.github.io/xaspy/v0.3.10/index.html)
+
+
 # next steps (maybe/hopefully)
 
 - [ ] write (better) docs
