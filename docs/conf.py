@@ -16,7 +16,6 @@ author = "Damian"
 extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.autodoc",
-    "sphinx_multiversion",
 ]
 
 templates_path = ["_templates"]
@@ -28,14 +27,3 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
-
-# Ensure the version selector sidebar is always included
-html_sidebars = {
-    "**": [
-        "versioning.html",  # Provided by sphinx-multiversion
-        "globaltoc.html",
-        "relations.html",
-        "sourcelink.html",
-        "searchbox.html",
-    ]
-}
