@@ -16,6 +16,7 @@ author = "Damian"
 extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.autodoc",
+    "sphinx_multiversion",
 ]
 
 templates_path = ["_templates"]
@@ -31,7 +32,7 @@ html_static_path = ["_static"]
 # Ensure the version selector sidebar is always included
 html_sidebars = {
     "**": [
-        "versions.html",
+        "versioning.html",  # Provided by sphinx-multiversion
         "globaltoc.html",
         "relations.html",
         "sourcelink.html",
