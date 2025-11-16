@@ -34,7 +34,7 @@ jobs:
 
       - name: Build versioned docs with sphinx
         run: |
-          git fetch
+          git fetch --prune --unshallow
           uv run python -m sphinx -b html docs/ docs/_build/html
           git reset --hard
           git checkout v0.3.10
